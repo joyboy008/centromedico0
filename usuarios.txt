@@ -1,0 +1,107 @@
+cada usuario tendar lo siguiente
+
+enfermero{
+    id
+    username
+    password
+    email
+}
+
+secretaria{
+    id
+    username
+    password
+    email
+}
+
+doctor{
+    id
+    username
+    password
+    email
+    permiso_especial
+}
+
+administrador{
+    id
+    username
+    password
+    email
+    permiso_especial
+    permiso_especial2
+}
+
+paciente{
+    dpi
+    nombre
+    nombre2
+    nombre3
+    apellido
+    apellido2
+    expediente_medico
+    direccion{
+        calle
+        avenida
+        casa
+        extra
+        zona
+        municipio
+        departamento
+    }
+    telefono
+    nacimiento{
+        dia
+        mes
+        anio
+        lugar{
+            municipio
+            departamento
+            pais
+        }
+    }
+    edad{
+        anios
+        meses
+        dias
+    }
+    sexo
+    estado_civil
+    ocupacion
+    emergencia{
+        telefono
+        parentesco
+        direccion{
+            calle
+            avenida
+            casa
+            extra
+            zona
+            municipio
+            departamento
+        }
+    }
+    hospitalizacion{
+        ingreso{
+            hora
+            servicio
+        }
+        egreso{
+            hora
+            servicio
+            dias_estancia
+            diagnostico_egreso{
+                diagnostico
+                codigo
+            }
+        }
+        complicaciones
+        operaciones{
+            operacion
+            codigo
+        }
+        opcionEgreso
+        causa_muerte
+        fecha
+        firma       
+    }
+}

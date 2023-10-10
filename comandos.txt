@@ -1,0 +1,11 @@
+pip install fastapi 
+pip install 'uvicorn[standard]'
+pip install pymongo
+pip install python-jose[cryptography]  
+pip install passlib
+uvicorn main:app --reload
+
+
+
+
+Conexion: mongodb://localhost
