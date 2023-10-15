@@ -3,6 +3,8 @@ import os
 from dotenv import load_dotenv
 import json
 
+# importar openai
+
 
 class ChatBot:
     def __init__(self):

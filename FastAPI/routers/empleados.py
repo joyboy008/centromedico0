@@ -18,7 +18,7 @@ from bson import ObjectId  # para tener un object id
 
 router = APIRouter(
     prefix="/empleados",
-    tags=["empleados"],
+    tags=["Empleados"],
     responses={404: {"Message": "No Encontrado"}},
 )
 
