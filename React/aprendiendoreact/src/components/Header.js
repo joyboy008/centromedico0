@@ -1,54 +1,114 @@
 import React, { Component } from "react";
 import logo from "../assets/images/01-logo.png";
 import logo1 from "../assets/images/02-logo.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
-class Header extends Component {
-  render() {
-    return (
-      <header id="header">
-        <div className="center">
-          <div id="logo">
-            <img src={logo} className="app-logo" alt="Logotipo" />
-          </div>
-          <div id="logo1">
-            <img src={logo1} className="app-logo1" alt="Logotipo" />
-          </div>
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import authProvider from "../utils/AuthProvider";
+import { Roles } from "../utils/constants";
 
-          <nav id="menu">
-            <ul>
-              <li>
-                <NavLink to="/" activeClassName="active">
+function Header() {
+  const navigate = useNavigate();
+  const handleCloseSession = () => {
+    authProvider.deleteSession();
+    navigate("/");
+  };
+
+  return (
+    <>
+      <Navbar expand="lg" className="bg-body-tertiary">
+        <Container>
+          <Navbar.Brand>
+            <NavLink to="/">
+              <div className="d-flex align-items-center">
+                <img className="logo-line" src={logo} alt="Logotipo" />
+                <img src={logo1} className="logo-name" alt="Logotipo" />
+              </div>
+            </NavLink>
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="basic-navbar-nav" />
+          <Navbar.Collapse
+            id="basic-navbar-nav"
+            className="d-flex justify-content-end"
+          >
+            <Nav>
+              <Nav.Link>
+                <NavLink
+                  className="sin-decoration"
+                  to="/"
+                  activeClassName="active"
+                >
                   Inicio
                 </NavLink>
-              </li>
-              <li>
-                <NavLink to="/agendar-citas" activeClassName="active">
+              </Nav.Link>
+              <Nav.Link>
+                <NavLink
+                  className="sin-decoration"
+                  to="/agendar-citas"
+                  activeClassName="active"
+                >
                   Agendar Citas
                 </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contacto" activeClassName="active">
+              </Nav.Link>
+              <Nav.Link>
+                <NavLink
+                  className="sin-decoration"
+                  to="/contacto"
+                  activeClassName="active"
+                >
                   Contacto
                 </NavLink>
-              </li>
-              <li>
-                <NavLink to="/pacientes" activeClassName="active">
-                  Pacientes
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/login" activeClassName="active">
-                  Login
-                </NavLink>
-              </li>
-            </ul>
-          </nav>
-          <div className="clearfix"></div>
-        </div>
-      </header>
-    );
-  }
+              </Nav.Link>
+
+              {authProvider.checkRoutePermissions("pacientes") ? (
+                <Nav.Link>
+                  <NavLink
+                    className="sin-decoration"
+                    to="/pacientes"
+                    activeClassName="active"
+                  >
+                    Pacientes
+                  </NavLink>
+                </Nav.Link>
+              ) : null}
+              {authProvider.checkRoutePermissions("usuarios") ? (
+                <Nav.Link>
+                  <NavLink
+                    className="sin-decoration"
+                    to="/usuarios"
+                    activeClassName="active"
+                  >
+                    Empleados
+                  </NavLink>
+                </Nav.Link>
+              ) : null}
+              <NavDropdown title="Session" id="basic-nav-dropdown">
+                {!!authProvider.checkAuth() ? (
+                  <NavDropdown.Item
+                    className="text-danger"
+                    onClick={handleCloseSession}
+                  >
+                    Cerrar Session
+                  </NavDropdown.Item>
+                ) : (
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/login">
+                      Login
+                    </NavLink>
+                  </NavDropdown.Item>
+                )}
+                <NavDropdown.Divider />
+              </NavDropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+            
+    </>
+  );
 }
 
 export default Header;

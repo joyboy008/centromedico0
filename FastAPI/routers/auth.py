@@ -33,5 +33,6 @@ async def login(credenciales: Credentials) -> dict:
         "_id": str(usuario_guardado.id),
         "username": usuario_guardado.username,
         "email": usuario_guardado.email,
+        "rol": usuario_guardado.rol,
         "token": token,
     }
