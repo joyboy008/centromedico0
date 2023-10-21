@@ -2,6 +2,7 @@ from beanie import Document
 from pydantic import BaseModel
 from utils.constants import Roles
 from datetime import datetime
+from typing import Optional
 
 
 class UsuarioResponsable(BaseModel):
@@ -30,7 +31,7 @@ class Hospitalizacion(BaseModel):
 class Paciente(Document):
     nombre: str
     fechaNacimiento: str
-    genero: str
+    genero: int
     dpi: int
     direccion: str
     municipio: str
@@ -39,14 +40,12 @@ class Paciente(Document):
     telefono: int
     email: str
     igss: str
-    consulta: Consulta
-    numero_expediente: int | None
-    etnia: str | None
-    ocupacion: str | None
-    estado_civil: str | None
-    hospitalizacion: Hospitalizacion
-    autopsia: str | None
-    causa_de_muerte: str | None
+    numero_expediente: Optional[int] = None
+    etnia: Optional[str] = None
+    ocupacion: Optional[str] = None
+    estado_civil: Optional[str] = None
+    autopsia: Optional[str] = None
+    causa_de_muerte: Optional[str] = None
 
     # otra informacion
     validado: bool

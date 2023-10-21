@@ -4,7 +4,8 @@ pip install pymongo
 pip install python-jose[cryptography]  
 pip install passlib
 uvicorn main:app --reload
-
+npm install sweetalert2
+npm install react-bootstrap-table-next --save
 
 
 

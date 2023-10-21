@@ -7,6 +7,14 @@ const authProvider = {
     localStorage.setItem(key, JSON.stringify(session));
   },
 
+  getAuthHeaders: () => {
+    const _session = localStorage.getItem(key);
+    const session = JSON.parse(_session);
+    return {
+      authorization: `Bearer ${session.token}`,
+    };
+  },
+
   getSession: () => {
     return localStorage.getItem(key);
   },

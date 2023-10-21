@@ -3,44 +3,6 @@ import Slider from "./Slider";
 import { NavLink } from "react-router-dom";
 
 class FormularioPacienteAdicional extends Component {
-  nombreRef = React.createRef();
-  apellidoRef = React.createRef();
-  bioRef = React.createRef();
-  pequenoRef = React.createRef();
-  medianoRef = React.createRef();
-  grandeRef = React.createRef();
-
-  state = {
-    user: {},
-  };
-
-  recibirFormulario = (e) => {
-    e.preventDefault();
-    var edad = "Aun no se sabe";
-
-    if (this.pequenoRef.current.checked) {
-      edad = this.pequenoRef.current.value;
-    } else if (this.medianoRef.current.checked) {
-      edad = this.medianoRef.current.value;
-    } else if (this.grandeRef.current.checked) {
-      edad = this.grandeRef.current.value;
-    } else {
-      edad = "Aun no se";
-    }
-
-    var user = {
-      nombre: this.nombreRef.current.value,
-      apellido: this.apellidoRef.current.value,
-      bio: this.bioRef.current.value,
-      edad: edad,
-    };
-
-    this.setState({
-      user: user,
-    });
-    console.log("Formulario Enviado");
-    console.log(user);
-  };
   render() {
     if (this.state.user.nombre) {
       var user = this.state.user;

@@ -1,195 +1,269 @@
-import React, { Component } from "react";
-import Slider from "./Slider";
+import React, { Component, useState } from "react";
+import Select from "./fields/Select";
 import { NavLink } from "react-router-dom";
+import { EstadoCivil } from "../utils/constants";
 
-class Formulario extends Component {
-  nombreRef = React.createRef();
-  apellidoRef = React.createRef();
-  bioRef = React.createRef();
-  pequenoRef = React.createRef();
-  medianoRef = React.createRef();
-  grandeRef = React.createRef();
+function Formulario({ data, onChange, onSubmit }) {
+  const [open, setOpen] = useState(false);
+  const estadoCivilOptions = [
+    { value: EstadoCivil.SOLTERO_A, label: "Soltero(a)" },
+    { value: EstadoCivil.CASADO_A, label: "Casado(a)" },
+    { value: EstadoCivil.VIUDO_A, label: "Viudo(a)" },
+    { value: EstadoCivil.SEPARADO_A, label: "Separado(a)" },
+    { value: EstadoCivil.DIVORCIADO_A, label: "Divorciado(a)" },
+  ];
 
-  state = {
-    user: {},
+  const generoOptions = [
+    {
+      value: 1,
+      label: "Masculino",
+    },
+    { value: 2, label: "Femenino" },
+  ];
+  const handleDatosAdicionalesClick = () => {
+    setOpen(!open);
   };
-
-  recibirFormulario = (e) => {
-    e.preventDefault();
-    var edad = "Aun no se sabe";
-
-    if (this.pequenoRef.current.checked) {
-      edad = this.pequenoRef.current.value;
-    } else if (this.medianoRef.current.checked) {
-      edad = this.medianoRef.current.value;
-    } else if (this.grandeRef.current.checked) {
-      edad = this.grandeRef.current.value;
-    } else {
-      edad = "Aun no se";
-    }
-
-    var user = {
-      nombre: this.nombreRef.current.value,
-      apellido: this.apellidoRef.current.value,
-      bio: this.bioRef.current.value,
-      edad: edad,
-    };
-
-    this.setState({
-      user: user,
-    });
-    console.log("Formulario Enviado");
-    console.log(user);
-  };
-  render() {
-    if (this.state.user.nombre) {
-      var user = this.state.user;
-    }
-    return (
-      <React.Fragment>
-        <br />
-        <div id="formulario">
-          <Slider title="Formulario" size="slider-small" />
-          <div className="center">
-            <br />
-            <h1>Agregar un nuevo paciente</h1>
-            {/* Crearemos un Formulario con React */}
-            <div className="formpaciente">
-              <div className="formdentro">
-                <header>Registrar Paciente</header>
-                <form action="#">
-                  <div className="form first">
-                    <div className="details personal">
-                      <span className="title">Datos Personales</span>
-                      <div className="fields">
-                        <div className="input-field">
-                          <label>Nombre completo</label>
-                          <input
-                            type="text"
-                            title="Ej. Josue Alejandro Morales Castillo"
-                            placeholder="Nombre completo"
-                            required
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>Teléfono</label>
-                          <input
-                            type="number"
-                            pattern="[0-9]{8}"
-                            maxlength="8"
-                            placeholder="Número de teléfono"
-                            required
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>DPI</label>
-                          <input
-                            type="number"
-                            pattern="[0-9]{13}"
-                            maxlength="13"
-                            placeholder="Ingrese el DPI"
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>Igss</label>
-                          <input type="text" placeholder="Ingresa el Igss" />
-                          {/* <!-- Si no hay igss entonces que devuelva no en el backend --> */}
-                        </div>
-                        <div className="input-field">
-                          <label>Genero</label>
-                          <select id="genero" name="genero">
-                            <option value="Masculino">Masculino</option>
-                            <option value="Femenino">Femenino</option>
-                          </select>
-                          {/* <!-- <input type="text" placeholder="Ingrese el Genero" required/> --> */}
-                        </div>
-
-                        <div className="input-field">
-                          <label>Fecha de Nacimiento</label>
-                          <input
-                            type="date"
-                            id="fechaNacimiento"
-                            name="fechaNacimiento"
-                            required
-                          />
-                        </div>
+  return (
+    <React.Fragment>
+      <br />
+      <div id="formulario">
+        <div className="center">
+          {/* Crearemos un Formulario con React */}
+          <div className="formpaciente">
+            <div className="formdentro">
+              <header>Registrar Paciente</header>
+              <form onSubmit={onSubmit}>
+                <div className="form first">
+                  <div className="details personal">
+                    <span className="title">Datos Personales</span>
+                    <div className="fields">
+                      <div className="input-field">
+                        <label>Nombre completo</label>
+                        <input
+                          type="text"
+                          name="nombre"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)+$"
+                          value={data.nombre}
+                          autoComplete="none"
+                          onChange={onChange}
+                          title="Ej. Josue Alejandro Morales Castillo"
+                          placeholder="Nombre completo"
+                          required
+                        />
                       </div>
-                    </div>
-                    <div className="details ID">
-                      <span className="title">Datos de Identidad</span>
-                      <div className="fields">
-                        <div className="input-field">
-                          <label>Email</label>
-                          <input
-                            type="text"
-                            title="Ej. Josue@centromedico.com"
-                            placeholder="Ingrese el correo electronico"
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>Dirección</label>
-                          <input
-                            type="text"
-                            placeholder="Ingrese la dirección"
-                            required
-                          />
-                        </div>
-
-                        <div className="input-field">
-                          <label>Municipio</label>
-                          <input
-                            type="text"
-                            placeholder="Ingrese el Municipio"
-                            required
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>Departamento</label>
-                          <input
-                            type="text"
-                            placeholder="Ingrese el Departamento"
-                            required
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>Nacionalidad</label>
-                          <input
-                            type="text"
-                            placeholder="Ingrese la Nacionalidad"
-                            required
-                          />
-                        </div>
-                        <div className="input-field">
-                          <label>Motivo de consulta</label>
-                          <input
-                            type="text"
-                            placeholder="Motivo de la consulta"
-                          />
-                        </div>
+                      <div className="input-field">
+                        <label>Teléfono</label>
+                        <input
+                          type="number"
+                          name="telefono"
+                          data-mask="0000 0000"
+                          autoComplete="none"
+                          value={data.telefono}
+                          onChange={onChange}
+                          pattern="^\d{4} \d{4}$"
+                          placeholder="Número de teléfono"
+                          required
+                        />
                       </div>
-                      <div className="buttons">
-                        <button className="saveBtn">
-                          <span className="btnText">Guardar</span>
-                          <i className="uil uil-navigator"></i>
-                        </button>
-                        <NavLink
-                          to="/datos_adicionales"
-                          activeClassName="active"
-                        >
-                          <button className="nextBtn">
-                            <span className="btnText">Datos Adicionales</span>
-                          </button>
-                        </NavLink>
+                      <div className="input-field">
+                        <label>DPI</label>
+                        <input
+                          type="number"
+                          autoComplete="none"
+                          name="dpi"
+                          data-mask="00 00"
+                          value={data.dpi}
+                          onChange={onChange}
+                          pattern="0-9]{4}-[0-9]{5}-[0-9]{4}"
+                          placeholder="Ingrese el DPI"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Igss</label>
+                        <input
+                          type="text"
+                          name="igss"
+                          autoComplete="none"
+                          pattern="[0-9]{5}"
+                          value={data.igss}
+                          onChange={onChange}
+                          placeholder="Ejemplo: 32234"
+                          required
+                        />
+                        {/* <!-- Si no hay igss entonces que devuelva no en el backend --> */}
+                      </div>
+                      <div className="input-field">
+                        <label>Genero</label>
+                        <Select
+                          id="genero"
+                          name="genero"
+                          value={data.genero}
+                          onChange={onChange}
+                          options={generoOptions}
+                        />
+                        {/* <!-- <input type="text" placeholder="Ingrese el Genero" required/> --> */}
+                      </div>
+
+                      <div className="input-field">
+                        <label>Fecha de Nacimiento</label>
+                        <input
+                          name="fechaNacimiento"
+                          value={data.fechaNacimiento}
+                          onChange={onChange}
+                          type="date"
+                          id="fechaNacimiento"
+                          required
+                        />
                       </div>
                     </div>
                   </div>
-                </form>
-              </div>
+                  <div className="details ID">
+                    <span className="title">Datos de Identidad</span>
+                    <div className="fields">
+                      <div className="input-field">
+                        <label>Email</label>
+                        <input
+                          type="text"
+                          name="email"
+                          value={data.email}
+                          onChange={onChange}
+                          autoComplete="none"
+                          pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
+                          title="Ej. Josue@centromedico.com"
+                          placeholder="Ingrese el correo electrónico"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Dirección</label>
+                        <input
+                          type="text"
+                          name="direccion"
+                          pattern="^[A-Za-z0-9\s.,-]+$" // no me funciona
+                          autoComplete="none"
+                          value={data.direccion}
+                          onChange={onChange}
+                          placeholder="Ingrese la dirección"
+                          required
+                        />
+                      </div>
+
+                      <div className="input-field">
+                        <label>Municipio</label>
+                        <input
+                          type="text"
+                          name="municipio"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.municipio}
+                          onChange={onChange}
+                          placeholder="Ingrese el Municipio"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Departamento</label>
+                        <input
+                          type="text"
+                          name="departamento"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.departamento}
+                          onChange={onChange}
+                          placeholder="Ingrese el Departamento"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Nacionalidad</label>
+                        <input
+                          type="text"
+                          name="nacionalidad"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.nacionalidad}
+                          onChange={onChange}
+                          placeholder="Ingrese la Nacionalidad"
+                          required
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={`datos-adicionales details address ${
+                      open ? "mostrar" : ""
+                    }`}
+                  >
+                    <span className="title">Datos adicionales</span>
+                    <div className="fields">
+                      <div className="input-field">
+                        <label>Etnia</label>
+                        <input
+                          type="text"
+                          name="etnia"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          autoComplete="none"
+                          value={data.etnia}
+                          onChange={onChange}
+                          title="Ej. Maya"
+                          placeholder="ingrese la Etnia"
+                          required={open}
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Ocupación</label>
+                        <input
+                          type="text"
+                          name="ocupacion"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          autoComplete="none"
+                          value={data.ocupacion}
+                          onChange={onChange}
+                          placeholder="Ingresa la Ocupación"
+                          required={open}
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Estado Civil</label>
+                        <Select
+                          name="estadoCivil"
+                          value={data.estadoCivil}
+                          onChange={onChange}
+                          options={estadoCivilOptions}
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Número de expediente</label>
+                        <input
+                          type="number"
+                          autoComplete="none"
+                          name="numeroExpediente"
+                          value={data.numeroExpediente}
+                          onChange={onChange}
+                          placeholder="Ingresa el número de expediente"
+                          required={open}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="buttons">
+                    <button type="submit" className="saveBtn">
+                      <span className="btnText">Guardar</span>
+                    </button>
+                    <button
+                      type="button"
+                      className="nxtBtn"
+                      onClick={handleDatosAdicionalesClick}
+                    >
+                      <span className="btnText">Datos Adicionales</span>
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
         </div>
-      </React.Fragment>
-    );
-  }
+      </div>
+    </React.Fragment>
+  );
 }
+
 export default Formulario;

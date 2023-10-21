@@ -19,12 +19,15 @@ import Slider from "./components/Slider";
 import Sidebar from "./components/Sidebar";
 import Blog from "./components/Blog";
 import Agendar from "./pages/Agendar";
-import Pacientes from "./pages/Pacientes";
+import Pacientes from "./pages/pacientes/PacientesCrear";
 import Formulario from "./components/Formulario";
 import Contacto from "./pages/Contacto";
 import FormularioPacienteAdicional from "./components/FormularioPacienteAdicional";
 import Login from "./pages/Login";
 import ResponsiveExample from "./components/TablaPacientes";
+import PacientesListar from "./pages/pacientes/PacientesListar";
+import UsuariosListar from "./pages/usuarios/UsuariosListar";
+import Usuarios from "./pages/usuarios/UsuariosCrear";
 
 var buttonString = "Ver más";
 // CONFIGURAR RUTAS Y PAGINAS
@@ -57,6 +60,18 @@ const router = createBrowserRouter([
   {
     path: "/datos_adicionales",
     element: <FormularioPacienteAdicional />,
+  },
+  {
+    path: "/pacientes-listado",
+    element: <PacientesListar />,
+  },
+  {
+    path: "/usuarios",
+    element: <Usuarios />,
+  },
+  {
+    path: "/usuarios-listado",
+    element: <UsuariosListar />,
   },
 ]);
 class Router extends Component {

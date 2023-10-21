@@ -730,3 +730,14 @@ form .buttons button{
   text-decoration: none;
   color: #2cb2d3;
 }
+
+.datos-adicionales{
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 1s ease-in-out;
+}
+
+.datos-adicionales.mostrar{
+  max-height: 210px;
+
+}

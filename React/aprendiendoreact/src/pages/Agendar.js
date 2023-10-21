@@ -12,10 +12,13 @@ class Agendar extends Component {
         <DefaulLayout
           title="Chatea con nosotros para agendar la cita"
           size="slider-small"
+          showSidebar
         >
           <div className="center">
             <div id="content">
-              <h1>Nuestro chatbot</h1>
+              <div className="py-4">
+                <h1>Nuestro chatbot</h1>
+              </div>
             </div>
           </div>
         </DefaulLayout>

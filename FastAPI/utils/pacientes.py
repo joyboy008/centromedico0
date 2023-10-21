@@ -6,6 +6,7 @@ class PacienteList(BaseModel):
     id: PydanticObjectId = Field(alias="_id")
     nombre: str
     telefono: int
+    fechaNacimiento: str
 
 
 class UnPaciente(BaseModel):
@@ -27,36 +28,36 @@ class Apoyo:
         paciente_guardado.telefono = paciente.telefono
         paciente_guardado.email = paciente.email
         paciente_guardado.igss = paciente.igss
-        paciente_guardado.consulta.consulta_motivo = paciente.consulta.consulta_motivo
-        paciente_guardado.consulta.consulta_numero = paciente.consulta.consulta_numero
-        paciente_guardado.consulta.consulta_dia = paciente.consulta.consulta_dia
-        paciente_guardado.consulta.diagnostico = paciente.consulta.diagnostico
-        paciente_guardado.consulta.tratamiento = paciente.consulta.tratamiento
+        # paciente_guardado.consulta.consulta_motivo = paciente.consulta.consulta_motivo
+        # paciente_guardado.consulta.consulta_numero = paciente.consulta.consulta_numero
+        # paciente_guardado.consulta.consulta_dia = paciente.consulta.consulta_dia
+        # paciente_guardado.consulta.diagnostico = paciente.consulta.diagnostico
+        # paciente_guardado.consulta.tratamiento = paciente.consulta.tratamiento
         paciente_guardado.numero_expediente = paciente.numero_expediente
         paciente_guardado.etnia = paciente.etnia
         paciente_guardado.ocupacion = paciente.ocupacion
         paciente_guardado.estado_civil = paciente.estado_civil
-        paciente_guardado.hospitalizacion.emergencia_nombre = (
-            paciente.hospitalizacion.emergencia_nombre
-        )
-        paciente_guardado.hospitalizacion.emergencia_telefono = (
-            paciente.hospitalizacion.emergencia_telefono
-        )
-        paciente_guardado.hospitalizacion.emergencia_parentesco = (
-            paciente.hospitalizacion.emergencia_parentesco
-        )
-        paciente_guardado.hospitalizacion.diagnostico_egreso = (
-            paciente.hospitalizacion.diagnostico_egreso
-        )
-        paciente_guardado.hospitalizacion.complicaciones = (
-            paciente.hospitalizacion.complicaciones
-        )
-        paciente_guardado.hospitalizacion.operaciones = (
-            paciente.hospitalizacion.operaciones
-        )
-        paciente_guardado.hospitalizacion.dias_estancia = (
-            paciente.hospitalizacion.dias_estancia
-        )
+        # paciente_guardado.hospitalizacion.emergencia_nombre = (
+        #     paciente.hospitalizacion.emergencia_nombre
+        # )
+        # paciente_guardado.hospitalizacion.emergencia_telefono = (
+        #     paciente.hospitalizacion.emergencia_telefono
+        # )
+        # paciente_guardado.hospitalizacion.emergencia_parentesco = (
+        #     paciente.hospitalizacion.emergencia_parentesco
+        # )
+        # paciente_guardado.hospitalizacion.diagnostico_egreso = (
+        #     paciente.hospitalizacion.diagnostico_egreso
+        # )
+        # paciente_guardado.hospitalizacion.complicaciones = (
+        #     paciente.hospitalizacion.complicaciones
+        # )
+        # paciente_guardado.hospitalizacion.operaciones = (
+        #     paciente.hospitalizacion.operaciones
+        # )
+        # paciente_guardado.hospitalizacion.dias_estancia = (
+        #     paciente.hospitalizacion.dias_estancia
+        # )
         paciente_guardado.autopsia = paciente.autopsia
         paciente_guardado.causa_de_muerte = paciente.causa_de_muerte
         paciente_guardado.validado = paciente.validado
@@ -67,7 +68,8 @@ class Apoyo:
         return {
             "nombre": nuevo_paciente.nombre,
             "telefono": nuevo_paciente.telefono,
-            "consulta": nuevo_paciente.consulta,
+            "fechaNacimiento": nuevo_paciente.fechaNacimiento
+            # "consulta": nuevo_paciente.consulta,
         }
 
     def vistaActualizar(paciente_guardado):
@@ -75,7 +77,7 @@ class Apoyo:
             "mensaje": paciente_guardado.nombre + " actualizado",
             "paciente": {
                 "telefono": paciente_guardado.telefono,
-                "consulta.consulta_motivo": paciente_guardado.consulta.consulta_motivo,
+                # "consulta.consulta_motivo": paciente_guardado.consulta.consulta_motivo,
             },
         }
 

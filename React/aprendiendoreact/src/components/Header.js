@@ -64,26 +64,33 @@ function Header() {
               </Nav.Link>
 
               {authProvider.checkRoutePermissions("pacientes") ? (
-                <Nav.Link>
-                  <NavLink
-                    className="sin-decoration"
-                    to="/pacientes"
-                    activeClassName="active"
-                  >
-                    Pacientes
-                  </NavLink>
-                </Nav.Link>
+                <NavDropdown title="Pacientes" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/pacientes">
+                      Registrar Paciente
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/pacientes-listado">
+                      Listar Pacientes
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                </NavDropdown>
               ) : null}
               {authProvider.checkRoutePermissions("usuarios") ? (
-                <Nav.Link>
-                  <NavLink
-                    className="sin-decoration"
-                    to="/usuarios"
-                    activeClassName="active"
-                  >
-                    Empleados
-                  </NavLink>
-                </Nav.Link>
+                <NavDropdown title="Usuarios" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/usuarios">
+                      Registrar Usuario
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/usuarios-listado">
+                      Listar Usuarios
+                    </NavLink>
+                  </NavDropdown.Item>
+                </NavDropdown>
               ) : null}
               <NavDropdown title="Session" id="basic-nav-dropdown">
                 {!!authProvider.checkAuth() ? (
@@ -105,8 +112,8 @@ function Header() {
             </Nav>
           </Navbar.Collapse>
         </Container>
+             
       </Navbar>
-            
     </>
   );
 }
