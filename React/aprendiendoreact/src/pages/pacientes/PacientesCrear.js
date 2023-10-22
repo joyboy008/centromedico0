@@ -58,7 +58,7 @@ class Pacientes extends Component {
       .crearPaciente(data)
       .then((response) => {
         Swal.fire({
-          title: "Usuario creado con exito!",
+          title: "Paciente creado con exito!",
           icon: "success",
           confirmButtonText: "Ok",
         });

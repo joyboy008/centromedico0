@@ -42,7 +42,7 @@ async def actualizar_usuario(paciente: Paciente, paciente_id: PydanticObjectId):
         "mensaje": paciente_guardado.nombre + " actualizado",
         "paciente": {
             "telefono": paciente_guardado.telefono,
-            "consulta.consulta_motivo": paciente_guardado.consulta.consulta_motivo,
+            # "consulta.consulta_motivo": paciente_guardado.consulta.consulta_motivo,
         },
     }
 
@@ -55,7 +55,7 @@ async def listar_pacientes():
 
 @router.get("/{paciente_id}", dependencies={Depends(JWTValidator())})
 async def obtener_paciente(paciente_id: PydanticObjectId):
-    paciente = await Paciente.find_one(Paciente.id == paciente_id).project(UnPaciente)
+    paciente = await Paciente.find_one(Paciente.id == paciente_id)
     return {"paciente": paciente}
 
 

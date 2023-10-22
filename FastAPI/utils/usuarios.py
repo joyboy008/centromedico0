@@ -22,7 +22,6 @@ class Apoyo:
     def guardar_usuario(usuario_guardado, usuario):
         usuario_guardado.username = usuario.username
         usuario_guardado.nombre = usuario.nombre
-        usuario_guardado.password = usuario.password
         usuario_guardado.especialidad = usuario.especialidad
         usuario_guardado.igss = usuario.igss
         usuario_guardado.fechaNacimiento = usuario.fechaNacimiento

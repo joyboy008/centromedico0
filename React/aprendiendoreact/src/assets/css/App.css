@@ -183,6 +183,18 @@ body {
   margin-top: 30px;
 }        
 
+
+.sidebar-search{
+  text-align: left;
+  background: #f7f7f7;  
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-top: 30px;
+  width: 35%;
+}      
+
 .sidebar-item h3{
   text-transform: uppercase;
   font-size: 18px;
@@ -214,6 +226,9 @@ body {
 
 .btn-success{
   background: rgb(59, 166, 228);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px
 }
 .btn-success:hover{
   background: black;
@@ -633,6 +648,8 @@ form .fields .input-field{
   height: 42px;
   margin: 8px 0;
 }
+
+
 
 .input-field select{
   outline: none;

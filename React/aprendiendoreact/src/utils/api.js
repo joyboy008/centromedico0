@@ -23,6 +23,24 @@ const api = {
     };
     return axios.get(`${BASE_URL}/pacientes`, { headers });
   },
+
+  getPaciente: (pacienteId) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+    return axios.get(`${BASE_URL}/pacientes/${pacienteId}`, { headers });
+  },
+  actualizarPaciente: (data, id) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+
+    return axios.put(`${BASE_URL}/pacientes/${id}`, data, { headers });
+  },
   crearUsuario: (data) => {
     const authHeaders = authProvider.getAuthHeaders();
     const headers = {

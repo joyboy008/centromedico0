@@ -28,6 +28,9 @@ import ResponsiveExample from "./components/TablaPacientes";
 import PacientesListar from "./pages/pacientes/PacientesListar";
 import UsuariosListar from "./pages/usuarios/UsuariosListar";
 import Usuarios from "./pages/usuarios/UsuariosCrear";
+import PacientesActualizar from "./pages/pacientes/PacientesActualizar";
+import api from "./utils/api";
+import { json } from "react-router-dom";
 
 var buttonString = "Ver más";
 // CONFIGURAR RUTAS Y PAGINAS
@@ -64,6 +67,15 @@ const router = createBrowserRouter([
   {
     path: "/pacientes-listado",
     element: <PacientesListar />,
+  },
+  {
+    path: "/pacientes/:pacienteId",
+    element: <PacientesActualizar />,
+
+    loader: async ({ params }) => {
+      const response = await api.getPaciente(params.pacienteId);
+      return json(response.data, { status: 200 });
+    },
   },
   {
     path: "/usuarios",

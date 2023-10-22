@@ -34,13 +34,13 @@ function Login() {
         token: response.data.token,
       };
       authProvider.saveSession(session);
-      navigate("/pacientes");
+      navigate("/pacientes-listado");
     });
   };
 
   useEffect(() => {
     if (authProvider.checkAuth()) {
-      navigate("/pacientes");
+      navigate("/pacientes-listado");
     }
   }, [navigate]);
 

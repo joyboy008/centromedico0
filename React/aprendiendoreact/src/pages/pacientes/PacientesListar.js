@@ -5,6 +5,7 @@ import Spinner from "react-bootstrap/Spinner";
 import api from "../../utils/api";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import TableActions from "../../components/TableActions";
+import Sidebar from "../../components/Sidebar";
 
 function PacientesListar() {
   const [data, setData] = useState([]);
@@ -40,13 +41,13 @@ function PacientesListar() {
     api
       .listarPacientes()
       .then((response) => {
-        console.log(response.data);
         setData(response.data);
       })
       .catch((err) => console.log(err));
   }, []);
   return (
     <DefaulLayout title="Listado de Pacientes">
+      <Sidebar />
       <div className="py-4"></div>
       {isLoading ? (
         <Spinner animation="grow" variant="info" />

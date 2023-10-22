@@ -1,5 +1,8 @@
 from pydantic import BaseModel, Field
 from beanie import PydanticObjectId
+from typing import Optional
+from datetime import datetime
+from db.models.Paciente import UsuarioResponsable
 
 
 class PacienteList(BaseModel):
@@ -11,8 +14,27 @@ class PacienteList(BaseModel):
 
 class UnPaciente(BaseModel):
     nombre: str
-    telefono: int
+    fechaNacimiento: str
+    genero: int
     dpi: int
+    direccion: str
+    municipio: str
+    departamento: str
+    nacionalidad: str
+    telefono: int
+    email: str
+    igss: str
+    numero_expediente: Optional[int] = None
+    etnia: Optional[str] = None
+    ocupacion: Optional[str] = None
+    estado_civil: Optional[str] = None
+    autopsia: Optional[str] = None
+    causa_de_muerte: Optional[str] = None
+
+    # otra informacion
+    validado: bool
+    usuario_encargado: UsuarioResponsable
+    created_at: datetime = datetime.now()
 
 
 class Apoyo:
