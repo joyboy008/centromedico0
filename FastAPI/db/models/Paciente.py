@@ -32,15 +32,15 @@ class Paciente(Document):
     nombre: str
     fechaNacimiento: str
     genero: int
-    dpi: int
+    dpi: str
     direccion: str
     municipio: str
     departamento: str
     nacionalidad: str
-    telefono: int
+    telefono: str
     email: str
     igss: str
-    numero_expediente: Optional[int] = None
+    numero_expediente: Optional[str] = None
     etnia: Optional[str] = None
     ocupacion: Optional[str] = None
     estado_civil: Optional[str] = None

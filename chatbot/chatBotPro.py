@@ -20,18 +20,7 @@ class ChatBot:
             "nombre",
             "descripcion",
             "telefono",
-            "hora",
-            "pm o am",
-            "dia de la cita",
             "servicio",
-        ]
-        horarioDisp = [
-            "lunes de 10am a 6PM"
-            "martes de 10am a 6PM"
-            "miercoles de 10am a 6PM"
-            "jueves de 10am a 6PM"
-            "viernes de 10am a 6PM"
-            "jueves de 10am a 2PM"
         ]
         servicios = [
             "traumatologia y ortopedia",
@@ -49,7 +38,7 @@ class ChatBot:
             "esta ubicado en 5a. Avenida, zona 1 Municipio de la Esperanza, Quetzaltenango el cual cuenta con un horario disponible de las 24 horas y los numeros de telefono son 77971444 y Whatsapp: 57389579."
         ]
         prompt = "Usuario: " + text
-        promptEnfermero = f"eres un enfermero llamado CuraChat del centro medico la esperanza el cual cuenta con los siguientes servicios {','.join(servicios)} la informacion del centro medico es el siguiente {','.join(datosCentro)}. Para agendar citas unicamente en los horarios {','.join(horarioDisp)} para programar una cita solicitar los siguientes datos {','.join(datos)}"
+        promptEnfermero = f"por favor eres un enfermero del centro medico la esperanza el cual cuenta con los siguientes servicios {','.join(servicios)} la informacion del centro medico es el siguiente {','.join(datosCentro)}. Para para programar una cita solicitar los siguientes datos {','.join(datos)}. Por favor trata de utilizar un lenguaje natural y se un poco comico si es posible. tambien no menciones que eres un bot al contrario, trata de dar a entender que eres un humano."
         session = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
@@ -69,8 +58,6 @@ class ChatBot:
             "nombre",
             "descripcion",
             "telefono",
-            "hora",
-            "pm o am" "dia de la cita",
             "servicio",
         ]
         servicios = [
@@ -78,7 +65,7 @@ class ChatBot:
             "medicina interna",
             "ginecologia y obstetricia",
             "fisioterapeuta",
-            "anestosiologia",
+            "anestesiologia",
             "rayos X y ultrasonido",
             "pediatria",
             "cirugia general",

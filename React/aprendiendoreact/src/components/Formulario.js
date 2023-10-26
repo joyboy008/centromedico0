@@ -3,7 +3,7 @@ import Select from "./fields/Select";
 import { NavLink } from "react-router-dom";
 import { EstadoCivil } from "../utils/constants";
 
-function Formulario({ data, onChange, onSubmit }) {
+function Formulario({ title, data, onChange, onSubmit }) {
   const [open, setOpen] = useState(false);
   const estadoCivilOptions = [
     { value: EstadoCivil.SOLTERO_A, label: "Soltero(a)" },
@@ -31,7 +31,7 @@ function Formulario({ data, onChange, onSubmit }) {
           {/* Crearemos un Formulario con React */}
           <div className="formpaciente">
             <div className="formdentro">
-              <header>Registrar Paciente</header>
+              <header>{title} Paciente</header>
               <form onSubmit={onSubmit}>
                 <div className="form first">
                   <div className="details personal">
@@ -54,13 +54,13 @@ function Formulario({ data, onChange, onSubmit }) {
                       <div className="input-field">
                         <label>Teléfono</label>
                         <input
-                          type="number"
+                          type="text"
                           name="telefono"
-                          data-mask="0000 0000"
+                          title="Ej. 55443322"
+                          pattern="[0-9]{8}"
                           autoComplete="none"
                           value={data.telefono}
                           onChange={onChange}
-                          pattern="^\d{4} \d{4}$"
                           placeholder="Número de teléfono"
                           required
                         />
@@ -68,13 +68,13 @@ function Formulario({ data, onChange, onSubmit }) {
                       <div className="input-field">
                         <label>DPI</label>
                         <input
-                          type="number"
+                          type="text"
                           autoComplete="none"
                           name="dpi"
-                          data-mask="00 00"
+                          title="Ej. 2492 34823 0101"
+                          pattern="[0-9]{13}"
                           value={data.dpi}
                           onChange={onChange}
-                          pattern="0-9]{4}-[0-9]{5}-[0-9]{4}"
                           placeholder="Ingrese el DPI"
                           required
                         />
@@ -89,7 +89,6 @@ function Formulario({ data, onChange, onSubmit }) {
                           value={data.igss}
                           onChange={onChange}
                           placeholder="Ejemplo: 32234"
-                          required
                         />
                         {/* <!-- Si no hay igss entonces que devuelva no en el backend --> */}
                       </div>
@@ -233,8 +232,9 @@ function Formulario({ data, onChange, onSubmit }) {
                       <div className="input-field">
                         <label>Número de expediente</label>
                         <input
-                          type="number"
+                          type="text"
                           autoComplete="none"
+                          pattern="[0-9]*{6}"
                           name="numeroExpediente"
                           value={data.numeroExpediente}
                           onChange={onChange}

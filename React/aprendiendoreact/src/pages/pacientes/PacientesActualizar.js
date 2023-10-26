@@ -53,6 +53,7 @@ function PacientesActualizar() {
         <Spinner animation="grow" variant="info" />
       ) : (
         <Formulario
+          title={"Actualizar"}
           data={pacienteData}
           onChange={handleChange}
           onSubmit={handleSubmit}

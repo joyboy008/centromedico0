@@ -88,6 +88,7 @@ class Pacientes extends Component {
     return (
       <DefaulLayout title="Pacientes" size="slider-small">
         <Formulario
+          title={"Registrar"}
           data={this.state}
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}

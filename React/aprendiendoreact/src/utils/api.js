@@ -58,6 +58,16 @@ const api = {
     };
     return axios.get(`${BASE_URL}/usuarios`, { headers });
   },
+  chat: (userInput, chatId, fecha) => {
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    let chatData = { mensaje: "", fecha: fecha };
+    if (!!userInput) {
+      chatData = { mensaje: userInput, fecha: fecha };
+    }
+    return axios.post(`${BASE_URL}/chat/${chatId}`, chatData, { headers });
+  },
 };
 
 export default api;

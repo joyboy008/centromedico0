@@ -3,6 +3,8 @@ import DefaulLayout from "../components/DefaultLayout";
 import authProvider from "../utils/AuthProvider";
 import api from "../utils/api";
 import { useNavigate } from "react-router-dom";
+import { FaUserDoctor } from "react-icons/fa6";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 function Login() {
   const navigate = useNavigate();
@@ -46,29 +48,33 @@ function Login() {
 
   return (
     <DefaulLayout title="Login">
-      <div id="center">
-        <form className="full-form" onSubmit={handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="email">email</label>
+      <div id="center-body">
+        <form className="wrapper" onSubmit={handleSubmit}>
+          <div className="input-box">
             <input
               onChange={handleChange}
               value={email}
               type="email"
+              autoComplete="off"
               name="email"
-              placeholder="ingrese el correo"
+              className="FaUserDoctor"
+              placeholder="email"
+              required
             />
+            <FaUserDoctor className="i" />
           </div>
-          <div className="form-group">
-            <label htmlFor="password">password</label>
+          <div className="input-box">
             <input
               onChange={handleChange}
               value={password}
               type="password"
               name="password"
-              placeholder="ingrese password"
+              placeholder="password"
+              required
             />
+            <RiLockPasswordLine className="i" />
           </div>
-          <input type="submit" value="Confirmar" className="btn btn-success" />
+          <input type="submit" value="Confirmar" className="boton" />
         </form>
       </div>
     </DefaulLayout>

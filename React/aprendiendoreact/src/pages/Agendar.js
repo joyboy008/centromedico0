@@ -1,23 +1,110 @@
-import React, { Component } from "react";
-import Sidebarc from "../components/Sidebarc";
-import Slider from "../components/Slider";
+import React, { Component, useEffect, useState } from "react";
+import ChatBot from "../components/ChatBot/Chatbot";
 import DefaulLayout from "../components/DefaultLayout";
 import Footer from "../components/Footer";
+import { v4 as uuid } from "uuid";
+import api from "../utils/api";
 
 // esto es para crear un nuevo componente
 class Agendar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      chatInput: "",
+      chatId: "",
+      chatHistory: [],
+      fechaValue: "",
+    };
+  }
+
+  componentDidMount() {
+    // inicializar el chat id;
+    const chatId = uuid();
+    this.setState({ chatId: chatId });
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ chatInput: event.target.value });
+  };
+
+  handleIniciarChat = () => {
+    if (!!this.state.fechaValue) {
+      const chatHistoryCopy = this.state.chatHistory.slice();
+      const botInput = {
+        author: "chatbot",
+        input:
+          "Hola! para realizar una cita indicanoslo en un mensaje por ejemplo: Deseo agendar una cita.",
+      };
+      const botInput1 = {
+        author: "chatbot",
+        input:
+          "posterior ingresa tu nombre, telefono, y motivo de tu visita en un unico mensaje, no te preocupes si no sabes a que servicio correspende yo te lo asignaré. 😉",
+      };
+      const botInput2 = {
+        author: "chatbot",
+        input:
+          "ahh! por cierto no solo puedo agendar citas, he aprendido bastante trabajando aquí. 😎",
+      };
+
+      chatHistoryCopy.push(botInput);
+      chatHistoryCopy.push(botInput1);
+      chatHistoryCopy.push(botInput2);
+      this.setState({ chatHistory: chatHistoryCopy });
+    }
+  };
+
+  handleEnviarMensaje = () => {
+    if (!!this.state.chatInput) {
+      let chatHistoryCopy = this.state.chatHistory.slice();
+      const userInput = this.state.chatInput;
+      chatHistoryCopy.push({ author: "user", input: this.state.chatInput });
+      this.setState(
+        {
+          chatHistory: chatHistoryCopy,
+          chatInput: "",
+        },
+        () => {
+          api
+            .chat(userInput, this.state.chatId, this.state.fechaValue)
+            .then((response) => {
+              const chatHistoryCopy = this.state.chatHistory.slice();
+              chatHistoryCopy.push({
+                author: "chatbot",
+                input: response.data.mensaje,
+              });
+              this.setState({ chatHistory: chatHistoryCopy });
+            })
+            .catch((err) => console.log(err));
+        }
+      );
+    }
+  };
+
+  handleDateChange = (event) => {
+    this.setState({ fechaValue: event.target.value });
+  };
+
   render() {
     return (
       <React.Fragment>
         <DefaulLayout
-          title="Chatea con nosotros para agendar la cita"
+          title="Chatea con nosotros 😁"
           size="slider-small"
           showSidebar
         >
           <div className="center">
             <div id="content">
               <div className="py-4">
-                <h1>Nuestro chatbot</h1>
+                <h3>Realizar una cita es mas fácil de lo que pensabas.</h3>
+                <ChatBot
+                  onSendMessage={this.handleEnviarMensaje}
+                  chatHistory={this.state.chatHistory}
+                  onChatStart={this.handleIniciarChat}
+                  onChange={this.handleInputChange}
+                  chatInput={this.state.chatInput}
+                  fechaValue={this.state.fechaValue}
+                  onDateChange={this.handleDateChange}
+                />
               </div>
             </div>
           </div>
