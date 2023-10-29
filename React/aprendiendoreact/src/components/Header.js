@@ -62,7 +62,21 @@ function Header() {
                   Contacto
                 </NavLink>
               </Nav.Link>
-
+              {authProvider.checkRoutePermissions("citas") ? (
+                <NavDropdown title="Citas" id="basic-nav-dropdown">
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/citas">
+                      Agendar Cita
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <NavDropdown.Item>
+                    <NavLink className="sin-decoration" to="/citas-listado">
+                      Listar Citas
+                    </NavLink>
+                  </NavDropdown.Item>
+                  <NavDropdown.Divider />
+                </NavDropdown>
+              ) : null}
               {authProvider.checkRoutePermissions("pacientes") ? (
                 <NavDropdown title="Pacientes" id="basic-nav-dropdown">
                   <NavDropdown.Item>

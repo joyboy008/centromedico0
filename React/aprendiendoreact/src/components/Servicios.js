@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Servicio from "./Servicio";
-import Sidebar from "./Sidebar";
 import Slider from "./Slider";
 
 class Servicios extends Component {

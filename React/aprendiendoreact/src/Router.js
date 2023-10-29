@@ -12,11 +12,10 @@ import Peliculas from "./components/Peliculas";
 import Error from "./components/error";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
-//import Sidebar from "./components/Sidebar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Slider from "./components/Slider";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/Buscador";
 import Blog from "./components/Blog";
 import Agendar from "./pages/Agendar";
 import Pacientes from "./pages/pacientes/PacientesCrear";
@@ -29,8 +28,15 @@ import PacientesListar from "./pages/pacientes/PacientesListar";
 import UsuariosListar from "./pages/usuarios/UsuariosListar";
 import Usuarios from "./pages/usuarios/UsuariosCrear";
 import PacientesActualizar from "./pages/pacientes/PacientesActualizar";
+import UsuariosActualizar from "./pages/usuarios/UsuariosActualizar";
+import ConsultaCrear from "./pages/consultas/ConsultaCrear";
+import ConsultaActualizar from "./pages/consultas/ConsultaActualizar";
 import api from "./utils/api";
 import { json } from "react-router-dom";
+import CitaCrear from "./pages/citas/CitaCrear";
+import CitaListar from "./pages/citas/CitaListar";
+import CitaActualizar from "./pages/citas/CitaActualizar";
+import Buscador from "./components/Buscador";
 
 var buttonString = "Ver más";
 // CONFIGURAR RUTAS Y PAGINAS
@@ -53,18 +59,6 @@ const router = createBrowserRouter([
     element: <Pacientes />,
   },
   {
-    path: "/login",
-    element: <Login />,
-  },
-  {
-    path: "/Tabla",
-    element: <ResponsiveExample />,
-  },
-  {
-    path: "/datos_adicionales",
-    element: <FormularioPacienteAdicional />,
-  },
-  {
     path: "/pacientes-listado",
     element: <PacientesListar />,
   },
@@ -78,12 +72,74 @@ const router = createBrowserRouter([
     },
   },
   {
+    path: "/pacientes/:pacienteId/consulta",
+    element: <ConsultaCrear />,
+
+    loader: async ({ params }) => {
+      const response = await api.getPaciente(params.pacienteId);
+      return json(response.data, { status: 200 });
+    },
+  },
+  {
+    path: "/citas",
+    element: <CitaCrear />,
+  },
+  {
+    path: "/citas-listado",
+    element: <CitaListar />,
+  },
+  {
+    path: "/citas/:citaId",
+    element: <CitaActualizar />,
+    loader: async ({ params }) => {
+      const response = await api.getCita(params.citaId);
+      return json(response.data, { status: 200 });
+    },
+  },
+  {
+    path: "/pacientes/:pacienteId/consulta/:consultaId",
+    element: <ConsultaActualizar />,
+
+    loader: async ({ params }) => {
+      const pacienteResponse = await api.getPaciente(params.pacienteId);
+      const consultaResponse = await api.getConsulta(params.consultaId);
+      return json(
+        {
+          paciente: pacienteResponse.data.paciente,
+          consulta: consultaResponse.data.consulta,
+        },
+        { status: 200 }
+      );
+    },
+  },
+  {
+    path: "/login",
+    element: <Login />,
+  },
+  {
+    path: "/Tabla",
+    element: <ResponsiveExample />,
+  },
+  {
+    path: "/datos_adicionales",
+    element: <FormularioPacienteAdicional />,
+  },
+
+  {
     path: "/usuarios",
     element: <Usuarios />,
   },
   {
     path: "/usuarios-listado",
     element: <UsuariosListar />,
+  },
+  {
+    path: "/usuarios/:usuarioId",
+    element: <UsuariosActualizar />,
+    loader: async ({ params }) => {
+      const response = await api.getUsuario(params.usuarioId);
+      return json(response.data, { status: 200 });
+    },
   },
 ]);
 class Router extends Component {
@@ -167,7 +223,7 @@ function PruebaParametros() {
           <h2 className="subheader">Prueba obtener nombre: {params.nombre}</h2>
           {siApellidos}
         </div>
-        <Sidebar />
+        <Buscador />
       </div>
     </React.Fragment>
   );

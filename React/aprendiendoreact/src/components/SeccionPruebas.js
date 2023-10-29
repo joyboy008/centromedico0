@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import MiComponente from "../components/MiComponente";
-import Sidebar from "./Sidebar";
 import Slider from "./Slider";
+import Buscador from "./Buscador";
 
 class SeccionPruebas extends Component {
   state = {
@@ -52,7 +52,7 @@ class SeccionPruebas extends Component {
               </p>
             </section>
           </section>
-          <Sidebar />
+          <Buscador />
         </div>
       </React.Fragment>
     );

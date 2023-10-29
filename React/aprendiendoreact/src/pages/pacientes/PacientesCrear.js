@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import DefaulLayout from "../../components/DefaultLayout";
+import DefaultLayout from "../../components/DefaultLayout";
 import TablaPacientes from "../../components/TablaPacientes";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Formulario from "../../components/Formulario";
 import api from "../../utils/api";
 import authProvider from "../../utils/AuthProvider";
@@ -35,7 +35,7 @@ class Pacientes extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = (event, { generarConsulta }) => {
     event.preventDefault();
     const usuario = authProvider.getUsuario();
 
@@ -57,36 +57,41 @@ class Pacientes extends Component {
     api
       .crearPaciente(data)
       .then((response) => {
+        const { id: pacienteId } = response.data;
         Swal.fire({
           title: "Paciente creado con exito!",
           icon: "success",
           confirmButtonText: "Ok",
-        });
-        this.setState({
-          nombre: "",
-          telefono: "",
-          dpi: "",
-          igss: "",
-          genero: 1,
-          fechaNacimiento: "",
-          email: "",
-          direccion: "",
-          municipio: "",
-          departamento: "",
-          nacionalidad: "",
-          numeroExpediente: null,
-          etnia: "",
-          ocupacion: "",
-          estadoCivil: EstadoCivil.SOLTERO_A,
-          autopsia: "",
-          causaDeMuerte: "",
+        }).then(() => {
+          if (generarConsulta) {
+            this.props.navigate(`/pacientes/${pacienteId}/consulta`);
+          }
+          this.setState({
+            nombre: "",
+            telefono: "",
+            dpi: "",
+            igss: "",
+            genero: 1,
+            fechaNacimiento: "",
+            email: "",
+            direccion: "",
+            municipio: "",
+            departamento: "",
+            nacionalidad: "",
+            numeroExpediente: null,
+            etnia: "",
+            ocupacion: "",
+            estadoCivil: EstadoCivil.SOLTERO_A,
+            autopsia: "",
+            causaDeMuerte: "",
+          });
         });
       })
       .catch((err) => console.log(err));
   };
   render() {
     return (
-      <DefaulLayout title="Pacientes" size="slider-small">
+      <DefaultLayout title="Pacientes" size="slider-small">
         <Formulario
           title={"Registrar"}
           data={this.state}
@@ -95,9 +100,14 @@ class Pacientes extends Component {
         />
         <br />
         {/* <TablaPacientes /> */}
-      </DefaulLayout>
+      </DefaultLayout>
     );
   }
 }
 
-export default Pacientes;
+const PacienteCrearWithRouter = (props) => {
+  const navigate = useNavigate();
+  return <Pacientes {...props} navigate={navigate} />;
+};
+
+export default PacienteCrearWithRouter;

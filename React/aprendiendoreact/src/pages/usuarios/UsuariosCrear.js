@@ -23,12 +23,16 @@ class Usuarios extends Component {
       municipio: "",
       departamento: "",
       nacionalidad: "",
-      numeroExpediente: null,
-      etnia: "",
-      ocupacion: "",
       estadoCivil: EstadoCivil.SOLTERO_A,
-      autopsia: "",
-      causaDeMuerte: "",
+      password: "",
+      rol: Roles.SECRETARIA,
+      especialidad: "",
+      emergenciaNombre: "",
+      emergenciaParentesco: "",
+      emergenciaTelefono: "",
+      bonos: "",
+      salarios: "",
+      descuentos: "",
     };
   }
   handleChange = (event) => {
@@ -37,22 +41,13 @@ class Usuarios extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    const usuario = authProvider.getUsuario();
 
     const data = {
       ...this.state,
-      validado: !(
-        usuario.rol === Roles.ENFERMERO || usuario.rol === Roles.SECRETARIA
-      ),
-
-      numero_expediente: this.state.numeroExpediente,
-      causaDeMuerte: this.state.causaDeMuerte,
-      estadoCivil: this.state.estadoCivil,
-
-      usuario_encargado: {
-        email: usuario.email,
-        rol: usuario.rol,
-      },
+      emergencia_nombre: this.state.emergenciaNombre,
+      emergencia_telefono: this.state.emergenciaTelefono,
+      emergencia_parentesco: this.state.emergenciaParentesco,
+      estado_civil: this.state.estadoCivil,
     };
     api
       .crearUsuario(data)
@@ -67,19 +62,23 @@ class Usuarios extends Component {
           telefono: "",
           dpi: "",
           igss: "",
-          genero: 1,
+          genero: 2,
           fechaNacimiento: "",
           email: "",
           direccion: "",
           municipio: "",
           departamento: "",
           nacionalidad: "",
-          numeroExpediente: null,
-          etnia: "",
-          ocupacion: "",
           estadoCivil: EstadoCivil.SOLTERO_A,
-          autopsia: "",
-          causaDeMuerte: "",
+          password: "",
+          rol: Roles.SECRETARIA,
+          especialidad: "",
+          emergenciaNombre: "",
+          emergenciaParentesco: "",
+          emergenciaTelefono: "",
+          bonos: "",
+          salarios: "",
+          descuentos: "",
         });
       })
       .catch((err) => console.log(err));
@@ -88,6 +87,7 @@ class Usuarios extends Component {
     return (
       <DefaulLayout title="Usuarios" size="slider-small">
         <FormularioUsuario
+          title={"Registrar"}
           data={this.state}
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}

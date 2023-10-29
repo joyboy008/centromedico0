@@ -3,7 +3,14 @@ import Select from "./fields/Select";
 import { NavLink } from "react-router-dom";
 import { EstadoCivil } from "../utils/constants";
 
-function Formulario({ title, data, onChange, onSubmit }) {
+function Formulario({
+  title,
+  data,
+  onChange,
+  onSubmit,
+  esActualizacion,
+  onGenerarConsulta,
+}) {
   const [open, setOpen] = useState(false);
   const estadoCivilOptions = [
     { value: EstadoCivil.SOLTERO_A, label: "Soltero(a)" },
@@ -32,7 +39,11 @@ function Formulario({ title, data, onChange, onSubmit }) {
           <div className="formpaciente">
             <div className="formdentro">
               <header>{title} Paciente</header>
-              <form onSubmit={onSubmit}>
+              <form
+                onSubmit={(event) => {
+                  onSubmit(event, { generarConsulta: false });
+                }}
+              >
                 <div className="form first">
                   <div className="details personal">
                     <span className="title">Datos Personales</span>
@@ -93,7 +104,7 @@ function Formulario({ title, data, onChange, onSubmit }) {
                         {/* <!-- Si no hay igss entonces que devuelva no en el backend --> */}
                       </div>
                       <div className="input-field">
-                        <label>Genero</label>
+                        <label>Género</label>
                         <Select
                           id="genero"
                           name="genero"
@@ -248,6 +259,30 @@ function Formulario({ title, data, onChange, onSubmit }) {
                     <button type="submit" className="saveBtn">
                       <span className="btnText">Guardar</span>
                     </button>
+                    {esActualizacion ? (
+                      <button
+                        onClick={(event) => {
+                          onGenerarConsulta(event);
+                        }}
+                        type="button"
+                        className="saveBtn"
+                      >
+                        <span className="btnText">Generar Consulta</span>
+                      </button>
+                    ) : (
+                      <button
+                        onClick={(event) => {
+                          onSubmit(event, { generarConsulta: true });
+                        }}
+                        type="button"
+                        className="saveBtn"
+                      >
+                        <span className="btnText">
+                          Guardar y Generar Consulta
+                        </span>
+                      </button>
+                    )}
+
                     <button
                       type="button"
                       className="nxtBtn"

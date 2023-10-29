@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from db.connection import connect
 from fastapi.middleware.cors import CORSMiddleware
-from routers import pacientes, usuarios, auth, doctors, chat, citas
+from routers import pacientes, usuarios, auth, chat, citas, consultas
 from fastapi.staticfiles import (
     StaticFiles,
 )  # para poder compartir archivos staticos 1/2
@@ -17,6 +17,8 @@ from fastapi.staticfiles import (
 # documentantacion con Redocly: http://127.0.0.1:8000/redoc
 
 # pip install pymongo   para instalar mongo
+# pip install bcrypt beanie motor PyJWT
+# pip install python-decouple
 
 
 # esto es para compartir imagenes o recursos Staticos 2/2
@@ -39,10 +41,10 @@ app.add_middleware(
 # Routers
 app.include_router(pacientes.router)
 app.include_router(usuarios.router)
-app.include_router(doctors.router)
 app.include_router(auth.router)
 app.include_router(chat.router)
 app.include_router(citas.router)
+app.include_router(consultas.router)
 
 # app.include_router(empleados.router)
 

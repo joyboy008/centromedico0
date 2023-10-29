@@ -1,9 +1,9 @@
 import React, { Component, useState } from "react";
 import Select from "./fields/Select";
 import { NavLink } from "react-router-dom";
-import { EstadoCivil } from "../utils/constants";
+import { EstadoCivil, Roles } from "../utils/constants";
 
-function Formulario({ data, onChange, onSubmit }) {
+function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
   const [open, setOpen] = useState(false);
   const estadoCivilOptions = [
     { value: EstadoCivil.SOLTERO_A, label: "Soltero(a)" },
@@ -20,6 +20,25 @@ function Formulario({ data, onChange, onSubmit }) {
     },
     { value: 2, label: "Femenino" },
   ];
+
+  const rolesOptions = [
+    {
+      value: Roles.ADMIN,
+      label: "ADMIN",
+    },
+    {
+      value: Roles.DOCTOR,
+      label: "DOCTOR",
+    },
+    {
+      value: Roles.SECRETARIA,
+      label: "SECRETARIA",
+    },
+    {
+      value: Roles.ENFERMERO,
+      label: "ENFERMERO",
+    },
+  ];
   const handleDatosAdicionalesClick = () => {
     setOpen(!open);
   };
@@ -31,7 +50,7 @@ function Formulario({ data, onChange, onSubmit }) {
           {/* Crearemos un Formulario con React */}
           <div className="formpaciente">
             <div className="formdentro">
-              <header>Registrar Usuario</header>
+              <header>{title} Usuario</header>
               <form onSubmit={onSubmit}>
                 <div className="form first">
                   <div className="details personal">
@@ -89,12 +108,11 @@ function Formulario({ data, onChange, onSubmit }) {
                           value={data.igss}
                           onChange={onChange}
                           placeholder="Ejemplo: 32234"
-                          required
                         />
                         {/* <!-- Si no hay igss entonces que devuelva no en el backend --> */}
                       </div>
                       <div className="input-field">
-                        <label>Genero</label>
+                        <label>Género</label>
                         <Select
                           id="genero"
                           name="genero"
@@ -134,6 +152,31 @@ function Formulario({ data, onChange, onSubmit }) {
                           placeholder="Ingrese el correo electrónico"
                           required
                         />
+                      </div>
+                      <div className="input-field">
+                        <label>Password</label>
+                        <input
+                          type="password"
+                          name="password"
+                          value={data.password}
+                          onChange={onChange}
+                          autoComplete="none"
+                          // pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"
+                          placeholder="Ingrese su password"
+                          title="Contraseña requerida de 8 caracteres (debe contener al menos una letra mayúscula, una letra minúscula y un número)"
+                          required={!esActualizacion}
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Rol</label>
+                        <Select
+                          id="rol"
+                          name="rol"
+                          value={data.rol}
+                          onChange={onChange}
+                          options={rolesOptions}
+                        />
+                        {/* <!-- <input type="text" placeholder="Ingrese el Genero" required/> --> */}
                       </div>
                       <div className="input-field">
                         <label>Dirección</label>
@@ -187,38 +230,9 @@ function Formulario({ data, onChange, onSubmit }) {
                       </div>
                     </div>
                   </div>
-                  <div
-                    className={`datos-adicionales details address ${
-                      open ? "mostrar" : ""
-                    }`}
-                  >
+                  <div>
                     <span className="title">Datos adicionales</span>
                     <div className="fields">
-                      <div className="input-field">
-                        <label>Salario</label>
-                        <input
-                          type="number"
-                          name="salario"
-                          autoComplete="none"
-                          value={data.etnia}
-                          onChange={onChange}
-                          title="Ej. Maya"
-                          placeholder="ingrese el salario"
-                          required={open}
-                        />
-                      </div>
-                      <div className="input-field">
-                        <label>Bonos</label>
-                        <input
-                          type="number"
-                          name="ocupacion"
-                          autoComplete="none"
-                          value={data.ocupacion}
-                          onChange={onChange}
-                          placeholder="Ingrese los bonos"
-                          required={open}
-                        />
-                      </div>
                       <div className="input-field">
                         <label>Estado Civil</label>
                         <Select
@@ -228,16 +242,95 @@ function Formulario({ data, onChange, onSubmit }) {
                           options={estadoCivilOptions}
                         />
                       </div>
+
+                      <div className="input-field">
+                        <label>Especialidad</label>
+                        <input
+                          type="text"
+                          name="especialidad"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.especialidad}
+                          onChange={onChange}
+                          placeholder="Ingrese la especialidad"
+                          title="Ej. Traumatologo"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Número de Emergencia</label>
+                        <input
+                          type="text"
+                          name="emergenciaTelefono"
+                          // pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.emergenciaTelefono}
+                          onChange={onChange}
+                          placeholder="Ingrese el número de emergencia"
+                          title="Ej. Traumatologo"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Nombre Emergencia</label>
+                        <input
+                          type="text"
+                          name="emergenciaNombre"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.emergenciaNombre}
+                          onChange={onChange}
+                          placeholder="Ingrese el nombre de Emergencia"
+                          title="Ej. Fernanda Corado"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Emergencia Parenteso</label>
+                        <input
+                          type="text"
+                          name="emergenciaParentesco"
+                          pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          value={data.emergenciaParentesco}
+                          onChange={onChange}
+                          placeholder="Ingrese el parentesco"
+                          title="Ej. Traumatologo"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Salario</label>
+                        <input
+                          type="number"
+                          name="salario"
+                          autoComplete="none"
+                          value={data.salario}
+                          onChange={onChange}
+                          title="Ej. Maya"
+                          placeholder="ingrese el salario"
+                          required
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Bonos</label>
+                        <input
+                          type="number"
+                          name="bonos"
+                          autoComplete="none"
+                          value={data.bonos}
+                          onChange={onChange}
+                          placeholder="Ingrese los bonos"
+                          required
+                        />
+                      </div>
+
                       <div className="input-field">
                         <label>Descuentos</label>
                         <input
                           type="number"
                           autoComplete="none"
-                          name="numeroExpediente"
-                          value={data.numeroExpediente}
+                          name="descuentos"
+                          value={data.descuentos}
                           onChange={onChange}
                           placeholder="Ingrese el total de descuentos"
-                          required={open}
+                          required
                         />
                       </div>
                     </div>

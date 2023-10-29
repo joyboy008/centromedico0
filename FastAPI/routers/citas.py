@@ -31,7 +31,7 @@ async def crear_cita(cita: Cita) -> dict:
 
 
 @router.put("/{cita_id}", dependencies={Depends(JWTValidator())})
-async def actualizar_cita(cita: Cita, cita_id: PydanticObjectId):
+async def actualizar_cita(cita: Cita, cita_id: PydanticObjectId) -> dict:
     cita_guardada = await Cita.get(cita_id)
     if not cita_guardada:
         raise HTTPException(status_code=404, detail="Cita no existe")
@@ -64,7 +64,7 @@ async def listar_citas():
 @router.get("/{cita_id}", dependencies={Depends(JWTValidator())})
 async def obtener_cita(cita_id: PydanticObjectId):
     cita = await Cita.find_one(Cita.id == cita_id)
-    return {"paciente": cita}
+    return {"cita": cita}
 
 
 @router.delete("/{cita_id}", dependencies={Depends(JWTValidator())})

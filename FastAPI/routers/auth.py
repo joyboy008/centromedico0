@@ -31,7 +31,6 @@ async def login(credenciales: Credentials) -> dict:
     token = jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
     return {
         "_id": str(usuario_guardado.id),
-        "username": usuario_guardado.username,
         "email": usuario_guardado.email,
         "rol": usuario_guardado.rol,
         "token": token,

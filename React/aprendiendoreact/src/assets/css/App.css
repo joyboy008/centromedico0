@@ -607,9 +607,10 @@ textarea{
 
 .formpaciente{
   min-height: 100vh;
+  padding-top: 30px;
+  padding-bottom: 30px;
   display: flex;
   border-radius: 5px;
-  height: 750px;
   text-align: left;
   align-items: center;
   justify-content: center;
@@ -821,4 +822,8 @@ form .buttons button{
 .datos-adicionales.mostrar{
   max-height: 210px;
 
+}
+
+.hidden{
+  display:none
 }

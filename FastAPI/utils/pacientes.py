@@ -8,6 +8,7 @@ from db.models.Paciente import UsuarioResponsable
 class PacienteList(BaseModel):
     id: PydanticObjectId = Field(alias="_id")
     nombre: str
+    dpi: str
     telefono: int
     fechaNacimiento: str
 
@@ -88,10 +89,10 @@ class Apoyo:
 
     def vistaCrear(nuevo_paciente):
         return {
+            "id": str(nuevo_paciente.id),
             "nombre": nuevo_paciente.nombre,
             "telefono": nuevo_paciente.telefono,
-            "fechaNacimiento": nuevo_paciente.fechaNacimiento
-            # "consulta": nuevo_paciente.consulta,
+            "fechaNacimiento": nuevo_paciente.fechaNacimiento,
         }
 
     def vistaActualizar(paciente_guardado):

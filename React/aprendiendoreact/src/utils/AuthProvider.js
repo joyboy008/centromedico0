@@ -38,7 +38,7 @@ const authProvider = {
       user: { rol },
     } = JSON.parse(_session);
 
-    if (route === "pacientes") {
+    if (route === "pacientes" || route === "citas") {
       if (
         rol === Roles.ADMIN ||
         rol === Roles.DOCTOR ||

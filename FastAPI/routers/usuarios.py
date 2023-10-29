@@ -4,7 +4,7 @@ from utils.constants import JWT_SECRET, JWT_ALGORITHM, Roles
 from beanie import PydanticObjectId
 from utils.auth import JWTValidator
 from utils.auth import Hasher
-from utils.usuarios import UsuarioMin, UsuarioList, Apoyo
+from utils.usuarios import UsuarioMin, UsuarioList, Apoyo, UsuarioActualizar, UsuarioPut
 
 router = APIRouter(
     prefix="/usuarios", tags=["Usuarios"], responses={404: {"Message": "No Encontrado"}}
@@ -20,7 +20,7 @@ async def crear_usuario(usuario: Usuario) -> dict:
 
 
 @router.put("/{usuario_id}", dependencies={Depends(JWTValidator())})
-async def actualizar_usuario(usuario: Usuario, usuario_id: PydanticObjectId):
+async def actualizar_usuario(usuario: UsuarioPut, usuario_id: PydanticObjectId):
     usuario_guardado = await Usuario.get(usuario_id)
     if not usuario_guardado:
         raise HTTPException(status_code=404, detail="Usuario no existe")
@@ -40,7 +40,9 @@ async def listar_usuarios():
 
 @router.get("/{usuario_id}", dependencies={Depends(JWTValidator())})
 async def obtener_usuario(usuario_id: PydanticObjectId):
-    usuario = await Usuario.find_one(Usuario.id == usuario_id).project(UsuarioList)
+    usuario = await Usuario.find_one(Usuario.id == usuario_id).project(
+        UsuarioActualizar
+    )
     return {"usuario": usuario}
 
 

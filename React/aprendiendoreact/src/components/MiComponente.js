@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Sidebar from "./Sidebar";
+import Buscador from "./Buscador";
 import Slider from "./Slider";
 
 // esto es para crear un nuevo componente
@@ -36,7 +36,7 @@ class MiComponente extends Component {
             )}
             ;
           </div>
-          <Sidebar />
+          <Buscador />
         </div>
       </React.Fragment>
     );

@@ -1,6 +1,8 @@
 from pydantic import BaseModel, Field
 from beanie import PydanticObjectId
 from utils.constants import Roles
+from typing import Optional
+from utils.auth import Hasher
 
 
 class UsuarioMin(BaseModel):
@@ -11,16 +13,63 @@ class UsuarioMin(BaseModel):
 
 class UsuarioList(BaseModel):
     id: PydanticObjectId = Field(alias="_id")
-    username: str
     nombre: str
-    telefono: int
+    dpi: str
+    telefono: str
+    fechaNacimiento: str
+    rol: Roles
+
+
+class UsuarioActualizar(BaseModel):
+    id: PydanticObjectId = Field(alias="_id")
+    nombre: str
+    especialidad: str
+    igss: str
+    fechaNacimiento: str  # Podrías considerar usar un campo específico para fechas
+    genero: int
+    dpi: str
+    direccion: str
+    municipio: str
+    departamento: str
+    nacionalidad: str
+    telefono: str
     email: str
+    estado_civil: str
+    emergencia_nombre: str
+    emergencia_parentesco: str
+    emergencia_telefono: str
+    salario: float
+    bonos: float | None
+    descuentos: float | None
+    rol: Roles
+
+
+class UsuarioPut(BaseModel):
+    nombre: str
+    password: Optional[str] = None
+    especialidad: str
+    igss: str
+    fechaNacimiento: str  # Podrías considerar usar un campo específico para fechas
+    genero: int
+    dpi: str
+    direccion: str
+    municipio: str
+    departamento: str
+    nacionalidad: str
+    telefono: str
+    email: str
+    estado_civil: str
+    emergencia_nombre: str
+    emergencia_parentesco: str
+    emergencia_telefono: str
+    salario: float
+    bonos: float | None
+    descuentos: float | None
     rol: Roles
 
 
 class Apoyo:
     def guardar_usuario(usuario_guardado, usuario):
-        usuario_guardado.username = usuario.username
         usuario_guardado.nombre = usuario.nombre
         usuario_guardado.especialidad = usuario.especialidad
         usuario_guardado.igss = usuario.igss
@@ -42,9 +91,12 @@ class Apoyo:
         usuario_guardado.descuentos = usuario.descuentos
         usuario_guardado.rol = usuario.rol
 
+        if usuario.password:
+            usuario_guardado.password = Hasher.get_password_hash(usuario.password)
+
     def vistaActualizacion(usuario_guardado):
         return {
-            "mensaje": usuario_guardado.username + " actualizado",
+            "mensaje": usuario_guardado.nombre + " actualizado",
             "usuario": {
                 "nombre": usuario_guardado.nombre,
                 "dpi": usuario_guardado.dpi,
@@ -59,14 +111,13 @@ class Apoyo:
             "mensaje": "Usuario Eliminado",
             "usuario": {
                 "_id": str(usuario_guardado.id),
-                "nombre": usuario_guardado.username,
+                "nombre": usuario_guardado.nombre,
             },
         }
 
     def vistaCrear(nuevo_usuario):
         return {
             "_id": str(nuevo_usuario.id),
-            "username": nuevo_usuario.username,
             "nombre": nuevo_usuario.nombre,
             "telefono": nuevo_usuario.telefono,
             "email": nuevo_usuario.email,

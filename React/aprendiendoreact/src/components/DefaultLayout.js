@@ -4,7 +4,12 @@ import Sidebarc from "./Sidebarc";
 import Slider from "./Slider";
 import Footer from "./Footer";
 
-function DefaulLayout({ children, title, size = "slider-small", showSidebar }) {
+function DefaultLayout({
+  children,
+  title,
+  size = "slider-small",
+  showSidebar,
+}) {
   return (
     <>
       <Header />
@@ -17,4 +22,4 @@ function DefaulLayout({ children, title, size = "slider-small", showSidebar }) {
   );
 }
 
-export default DefaulLayout;
+export default DefaultLayout;
