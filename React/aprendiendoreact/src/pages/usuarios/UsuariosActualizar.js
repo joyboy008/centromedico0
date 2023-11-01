@@ -74,7 +74,7 @@ function UsuariosActualizar() {
       ) : (
         <FormularioUsuario
           esActualizacion={true}
-          title={"Actualizar"}
+          title={"Actualizar Usuario"}
           data={usuarioData}
           onChange={handleChange}
           onSubmit={handleSubmit}

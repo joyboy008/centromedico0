@@ -87,7 +87,7 @@ class Usuarios extends Component {
     return (
       <DefaulLayout title="Usuarios" size="slider-small">
         <FormularioUsuario
-          title={"Registrar"}
+          title={"Registrar Usuario"}
           data={this.state}
           onChange={this.handleChange}
           onSubmit={this.handleSubmit}

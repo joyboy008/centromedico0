@@ -83,6 +83,7 @@ function Login() {
               autoComplete="off"
               name="email"
               className="FaUserDoctor"
+              pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
               placeholder="email"
               onFocus={() => {
                 if (showValidationAlert) {

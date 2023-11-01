@@ -65,17 +65,19 @@ class ConsultaCrear extends Component {
   }
   render() {
     return (
-      <DefaultLayout title="CrearConsulta">
-        {this.state.loading ? (
-          <Spinner animation="grow" variant="info" />
-        ) : (
-          <FormularioConsulta
-            title={"Crear Consulta"}
-            data={this.state}
-            onSubmit={this.handleSubmit}
-            onChange={this.handleChange}
-          />
-        )}
+      <DefaultLayout title="Crear Consulta">
+        <div className="py-4">
+          {this.state.loading ? (
+            <Spinner animation="grow" variant="info" />
+          ) : (
+            <FormularioConsulta
+              title={"Crear Consulta"}
+              data={this.state}
+              onSubmit={this.handleSubmit}
+              onChange={this.handleChange}
+            />
+          )}
+        </div>
       </DefaultLayout>
     );
   }

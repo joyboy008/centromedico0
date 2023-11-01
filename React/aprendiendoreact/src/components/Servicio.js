@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InfoServicios from "./InfoServicios";
+import InfoServicios from "./Accordion";
 
 class Servicio extends Component {
   render() {
@@ -7,13 +7,11 @@ class Servicio extends Component {
 
     return (
       <article className="article-item" id="article-template">
-        {/* <div className="img-wrap">
+        <div className="img-wrap">
           <img src={image} alt={titulo} />
-        </div> */}
-        <h2>{titulo}</h2>
-        <div>
-          <InfoServicios details={details} />
         </div>
+        <h2>{titulo}</h2>
+        <InfoServicios>{details}</InfoServicios>
         <div className="clearfix"></div>
       </article>
     );

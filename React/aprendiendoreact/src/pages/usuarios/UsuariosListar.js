@@ -62,11 +62,15 @@ function PacientesListar() {
   return (
     <DefaulLayout title="Listado de Usuarios">
       <Buscador
+        placeholder={
+          " Puedes buscar por nombre o por número de DPI al empleado 😉"
+        }
         value={criteria}
         onSearchChange={(event) => {
           setCriteria(event.target.value);
         }}
       />
+      <div className="py-1"></div>
       {isLoading ? (
         <Spinner animation="grow" variant="info" />
       ) : (

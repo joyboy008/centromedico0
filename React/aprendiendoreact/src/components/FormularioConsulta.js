@@ -36,7 +36,7 @@ function FormularioCrear({ title, onSubmit, onChange, data, esActualizacion }) {
                         onChange={onChange}
                         placeholder="Nombre completo"
                         required
-                        disabled
+                        disabled={esActualizacion && !data.activo}
                       />
                     </div>
                   </div>
@@ -91,7 +91,7 @@ function FormularioCrear({ title, onSubmit, onChange, data, esActualizacion }) {
                         onChange={onChange}
                         placeholder="diagnóstico..."
                         value={data.diagnostico}
-                        required
+                        required={esActualizacion}
                         disabled={esActualizacion && !data.activo}
                       ></textarea>
                     </div>
@@ -103,7 +103,7 @@ function FormularioCrear({ title, onSubmit, onChange, data, esActualizacion }) {
                         onChange={onChange}
                         placeholder="tratamiento..."
                         value={data.tratamiento}
-                        required
+                        required={esActualizacion}
                         disabled={esActualizacion && !data.activo}
                       ></textarea>
                     </div>

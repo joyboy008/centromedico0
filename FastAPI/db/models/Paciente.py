@@ -18,16 +18,6 @@ class Consulta(BaseModel):
     tratamiento: str | None
 
 
-class Hospitalizacion(BaseModel):
-    emergencia_nombre: str | None
-    emergencia_telefono: int | None
-    emergencia_parentesco: str | None
-    diagnostico_egreso: str | None
-    complicaciones: str | None
-    operaciones: str | None
-    dias_estancia: int | None
-
-
 class Paciente(Document):
     nombre: str
     fechaNacimiento: str

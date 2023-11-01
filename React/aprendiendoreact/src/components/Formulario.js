@@ -67,6 +67,11 @@ function Formulario({
                         <input
                           type="text"
                           name="telefono"
+                          onClick={(data) => {
+                            navigator.clipboard.writeText(
+                              data.telefono.textToCopy
+                            );
+                          }}
                           title="Ej. 55443322"
                           pattern="[0-9]{8}"
                           autoComplete="none"
@@ -87,7 +92,6 @@ function Formulario({
                           value={data.dpi}
                           onChange={onChange}
                           placeholder="Ingrese el DPI"
-                          required
                         />
                       </div>
                       <div className="input-field">
@@ -112,7 +116,6 @@ function Formulario({
                           onChange={onChange}
                           options={generoOptions}
                         />
-                        {/* <!-- <input type="text" placeholder="Ingrese el Genero" required/> --> */}
                       </div>
 
                       <div className="input-field">
@@ -142,7 +145,6 @@ function Formulario({
                           pattern="^[^@]+@[^@]+\.[a-zA-Z]{2,}$"
                           title="Ej. Josue@centromedico.com"
                           placeholder="Ingrese el correo electrónico"
-                          required
                         />
                       </div>
                       <div className="input-field">
@@ -154,6 +156,7 @@ function Formulario({
                           autoComplete="none"
                           value={data.direccion}
                           onChange={onChange}
+                          title="Ej. 2da calle 5-42 zona 3"
                           placeholder="Ingrese la dirección"
                           required
                         />
@@ -164,6 +167,7 @@ function Formulario({
                         <input
                           type="text"
                           name="municipio"
+                          title="Ej. La Esperanza"
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           value={data.municipio}
                           onChange={onChange}
@@ -176,6 +180,7 @@ function Formulario({
                         <input
                           type="text"
                           name="departamento"
+                          title="Ej. Quetzaltenango"
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           value={data.departamento}
                           onChange={onChange}
@@ -188,6 +193,7 @@ function Formulario({
                         <input
                           type="text"
                           name="nacionalidad"
+                          title="Ej. Guatemalteca"
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           value={data.nacionalidad}
                           onChange={onChange}
@@ -223,6 +229,7 @@ function Formulario({
                         <input
                           type="text"
                           name="ocupacion"
+                          title="Ej. Herrero"
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           autoComplete="none"
                           value={data.ocupacion}
@@ -247,9 +254,36 @@ function Formulario({
                           autoComplete="none"
                           pattern="[0-9]*{6}"
                           name="numeroExpediente"
+                          title="Ej. 3234"
                           value={data.numeroExpediente}
                           onChange={onChange}
                           placeholder="Ingresa el número de expediente"
+                          required={open}
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Causa de Muerte</label>
+                        <input
+                          type="text"
+                          autoComplete="none"
+                          name="causaDeMuerte"
+                          title="O solo coloca No"
+                          value={data.causaDeMuerte}
+                          onChange={onChange}
+                          placeholder="Ingresa el número de expediente"
+                          required={open}
+                        />
+                      </div>
+                      <div className="input-field">
+                        <label>Autopsia</label>
+                        <input
+                          type="text"
+                          autoComplete="none"
+                          name="autopsia"
+                          title="O solo coloca No"
+                          value={data.autopsia}
+                          onChange={onChange}
+                          placeholder="Ingresa el resultado."
                           required={open}
                         />
                       </div>
@@ -269,19 +303,7 @@ function Formulario({
                       >
                         <span className="btnText">Generar Consulta</span>
                       </button>
-                    ) : (
-                      <button
-                        onClick={(event) => {
-                          onSubmit(event, { generarConsulta: true });
-                        }}
-                        type="button"
-                        className="saveBtn"
-                      >
-                        <span className="btnText">
-                          Guardar y Generar Consulta
-                        </span>
-                      </button>
-                    )}
+                    ) : null}
 
                     <button
                       type="button"

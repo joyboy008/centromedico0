@@ -46,8 +46,8 @@ class Pacientes extends Component {
       ),
 
       numero_expediente: this.state.numeroExpediente,
-      causaDeMuerte: this.state.causaDeMuerte,
-      estadoCivil: this.state.estadoCivil,
+      causa_de_muerte: this.state.causaDeMuerte,
+      estado_civil: this.state.estadoCivil,
 
       usuario_encargado: {
         email: usuario.email,

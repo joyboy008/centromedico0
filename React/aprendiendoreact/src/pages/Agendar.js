@@ -33,22 +33,10 @@ class Agendar extends Component {
       const botInput = {
         author: "chatbot",
         input:
-          "Hola! para realizar una cita indicanoslo en un mensaje por ejemplo: Deseo agendar una cita.",
-      };
-      const botInput1 = {
-        author: "chatbot",
-        input:
-          "posterior ingresa tu nombre, telefono, y motivo de tu visita en un unico mensaje, no te preocupes si no sabes a que servicio correspende yo te lo asignaré. 😉",
-      };
-      const botInput2 = {
-        author: "chatbot",
-        input:
-          "ahh! por cierto no solo puedo agendar citas, he aprendido bastante trabajando aquí. 😎",
+          "Holaa, por cierto no solo puedo agendar citas, he aprendido un poco de medicina trabajando aquí. 😎",
       };
 
       chatHistoryCopy.push(botInput);
-      chatHistoryCopy.push(botInput1);
-      chatHistoryCopy.push(botInput2);
       this.setState({ chatHistory: chatHistoryCopy });
     }
   };

@@ -157,6 +157,54 @@ const api = {
       headers,
     });
   },
+  crearHospitalizacion: (data) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+    return axios.post(`${BASE_URL}/hospitalizaciones`, data, { headers });
+  },
+  actualizarHospitalizacion: (data, id) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+    return axios.put(`${BASE_URL}/pacientes/hospitalizacion/${id}`, data, {
+      headers,
+    });
+  },
+  getHospitalizacion: (id) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+    return axios.get(`${BASE_URL}/pacientes/hospitalizacion/${id}`, {
+      headers,
+    });
+  },
+  putHospitalizacion: (id) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+    return axios.put(`${BASE_URL}/hospitalizaciones/${id}/dar-de-alta`, {
+      headers,
+    });
+  },
+  listarPacienteHospitalizacion: (paciente_id) => {
+    const authHeaders = authProvider.getAuthHeaders();
+    const headers = {
+      ...authHeaders,
+      "Content-Type": "application/json",
+    };
+    return axios.get(`${BASE_URL}/pacientes/hospitalizaciones/${paciente_id}`, {
+      headers,
+    });
+  },
 };
 
 export default api;

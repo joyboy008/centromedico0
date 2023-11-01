@@ -11,6 +11,7 @@ import { Roles, EstadoCivil } from "../../utils/constants";
 import Swal from "sweetalert2";
 import Spinner from "react-bootstrap/Spinner";
 import TableActions from "../../components/TableActions";
+import CustomAccordion from "../../components/Accordion";
 
 function PacientesActualizar() {
   const data = useLoaderData();
@@ -18,6 +19,9 @@ function PacientesActualizar() {
   const [loading, setLoading] = useState(true);
   const [loadingConsultas, setLoadingConsultas] = useState(false);
   const [consultas, setConsultas] = useState([]);
+  const [loadingHospitalizaciones, setLoadingHospitalizaciones] =
+    useState(false);
+  const [hospitalizaciones, setHospitalizaciones] = useState([]);
   const navigate = useNavigate();
 
   const columns = [
@@ -60,6 +64,57 @@ function PacientesActualizar() {
     },
   ];
 
+  const columnsHospitalizaciones = [
+    {
+      dataField: "_id",
+      text: "ID",
+      hidden: true,
+    },
+    {
+      dataField: "fecha_inicio",
+      text: "Fecha de Inicio",
+      formatter: (cell) => {
+        return new Date(cell).toLocaleDateString("es-ES", {
+          weekday: "long",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+      },
+    },
+    {
+      dataField: "emergencia_nombre",
+      text: "Nombre de familiar de Emergencia",
+    },
+    {
+      dataField: "emergencia_telefono",
+      text: "teléfono de familiar de Emergencia",
+    },
+    {
+      dataField: "activo",
+      text: "ESTADO",
+      formatter: (cell) => {
+        return cell ? "ACTIVA" : "DE ALTA";
+      },
+    },
+    {
+      dataField: "#",
+      text: "Acciones",
+      formatter: (cell, row) => {
+        return (
+          <TableActions
+            edit={{
+              url: `/pacientes/${pacienteData._id}/hospitalizacion/`,
+            }}
+            rowId={row._id}
+          />
+        );
+      },
+    },
+  ];
+
   const handleChange = (event) => {
     const pacienteCopy = { ...pacienteData };
     pacienteCopy[event.target.name] = event.target.value;
@@ -68,8 +123,10 @@ function PacientesActualizar() {
 
   const handleSubmit = () => {
     setLoading(true);
-    const { _id, numeroExpediente, estadoCivil, ...paciente } = pacienteData;
+    const { _id, numeroExpediente, estadoCivil, causaDeMuerte, ...paciente } =
+      pacienteData;
     paciente.numero_expediente = numeroExpediente;
+    paciente.causa_de_muerte = causaDeMuerte;
     paciente.estado_civil = estadoCivil;
     api
       .actualizarPaciente(paciente, _id)
@@ -87,9 +144,12 @@ function PacientesActualizar() {
   useEffect(() => {
     setLoading(true);
     setLoadingConsultas(true);
-    const { estado_civil, numero_expediente, ...paciente } = data.paciente;
+    setLoadingHospitalizaciones(true);
+    const { estado_civil, numero_expediente, causa_de_muerte, ...paciente } =
+      data.paciente;
     paciente.estadoCivil = estado_civil;
     paciente.numeroExpediente = numero_expediente;
+    paciente.causaDeMuerte = causa_de_muerte;
     setPacienteData(paciente);
     setLoading(false);
     api.listarPacienteConsultas(paciente._id).then((response) => {
@@ -99,6 +159,22 @@ function PacientesActualizar() {
       setConsultas(consultasList);
       setLoadingConsultas(false);
     });
+
+    api
+      .listarPacienteHospitalizacion(paciente._id)
+      .then((response) => {
+        const hospitalizacionesList = response.data?.hospitalizaciones.sort(
+          (a, b) => {
+            return new Date(b.fecha_inicio) - new Date(a.fecha_inicio);
+          }
+        );
+        setHospitalizaciones(hospitalizacionesList);
+        setLoadingHospitalizaciones(false);
+      })
+
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   const handleGenerarConsulta = () => {
@@ -106,30 +182,57 @@ function PacientesActualizar() {
   };
   return (
     <DefaulLayout title="Actualizar Paciente" size="slider-small">
-      {loading ? (
-        <Spinner animation="grow" variant="info" />
-      ) : (
-        <Formulario
-          esActualizacion={true}
-          onGenerarConsulta={handleGenerarConsulta}
-          title={"Actualizar"}
-          data={pacienteData}
-          onChange={handleChange}
-          onSubmit={handleSubmit}
-        />
-      )}
-      <div className="pt-4">
-        <h2>Consultas</h2>
-        {loadingConsultas ? (
+      <div className="pb-5 pt-4">
+        {loading ? (
           <Spinner animation="grow" variant="info" />
         ) : (
-          <BootstrapTable
-            keyField="_id"
-            data={consultas}
-            columns={columns}
-            pagination={paginationFactory()}
+          <Formulario
+            esActualizacion={true}
+            onGenerarConsulta={handleGenerarConsulta}
+            title={"Actualizar"}
+            data={pacienteData}
+            onChange={handleChange}
+            onSubmit={handleSubmit}
           />
         )}
+        <div className="pt-4">
+          <h2>Consultas</h2>
+          {loadingConsultas ? (
+            <Spinner animation="grow" variant="info" />
+          ) : (
+            <CustomAccordion
+              openText="Ocultar"
+              closeText="Mostrar"
+              defaultEvent="0"
+            >
+              <BootstrapTable
+                keyField="_id"
+                data={consultas}
+                columns={columns}
+                pagination={paginationFactory()}
+              />
+            </CustomAccordion>
+          )}
+        </div>
+        <div className="pt-4">
+          <h2>Hospitalizaciones</h2>
+          {loadingConsultas ? (
+            <Spinner animation="grow" variant="info" />
+          ) : (
+            <CustomAccordion
+              openText="Ocultar"
+              closeText="Mostrar"
+              defaultEvent="0"
+            >
+              <BootstrapTable
+                keyField="_id"
+                data={hospitalizaciones}
+                columns={columnsHospitalizaciones}
+                pagination={paginationFactory()}
+              />
+            </CustomAccordion>
+          )}
+        </div>
       </div>
     </DefaulLayout>
   );

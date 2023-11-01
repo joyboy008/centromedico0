@@ -38,6 +38,7 @@ class CitaCrear extends Component {
       <DefaultLayout title="Agendar Cita">
         <FormularioCita
           data={this.state}
+          title="Agendar una cita"
           onSubmit={this.handleSubmit}
           onChange={this.handleChange}
         ></FormularioCita>

@@ -21,7 +21,7 @@ import Agendar from "./pages/Agendar";
 import Pacientes from "./pages/pacientes/PacientesCrear";
 import Formulario from "./components/Formulario";
 import Contacto from "./pages/Contacto";
-import FormularioPacienteAdicional from "./components/FormularioPacienteAdicional";
+// import FormularioPacienteAdicional from "./components/FormularioPacienteAdicional";
 import Login from "./pages/Login";
 import ResponsiveExample from "./components/TablaPacientes";
 import PacientesListar from "./pages/pacientes/PacientesListar";
@@ -37,6 +37,8 @@ import CitaCrear from "./pages/citas/CitaCrear";
 import CitaListar from "./pages/citas/CitaListar";
 import CitaActualizar from "./pages/citas/CitaActualizar";
 import Buscador from "./components/Buscador";
+import HospitalizacionCrear from "./pages/hospitalizaciones/HospitalizacionCrear";
+import HospitalizacionActualizar from "./pages/hospitalizaciones/HospitalizacionActualizar";
 
 var buttonString = "Ver más";
 // CONFIGURAR RUTAS Y PAGINAS
@@ -113,16 +115,62 @@ const router = createBrowserRouter([
     },
   },
   {
+    path: "/pacientes/:pacienteId/hospitalizaciones",
+    element: <HospitalizacionCrear />,
+
+    loader: async ({ params }) => {
+      const pacienteResponse = await api.getPaciente(params.pacienteId);
+      return json(
+        {
+          paciente: pacienteResponse.data.paciente,
+        },
+        { status: 200 }
+      );
+    },
+  },
+  {
+    path: "/pacientes/:pacienteId/hospitalizacion/:hospitalizacionId",
+    element: <HospitalizacionActualizar />,
+
+    loader: async ({ params }) => {
+      const pacienteResponse = await api.getPaciente(params.pacienteId);
+      const HospitalizacionResponse = await api.getHospitalizacion(
+        params.hospitalizacionId
+      );
+      return json(
+        {
+          paciente: pacienteResponse.data.paciente,
+          hospitalizacion: HospitalizacionResponse.data.hospitalizacion,
+        },
+        { status: 200 }
+      );
+    },
+  },
+  {
+    path: "/pacientes/:pacienteId/hospitalizacion/:hospitalizacionId/dar-de-alta",
+    element: <HospitalizacionActualizar />,
+
+    loader: async ({ params }) => {
+      const pacienteResponse = await api.getPaciente(params.pacienteId);
+      const HospitalizacionResponse = await api.getHospitalizacion(
+        params.hospitalizacionId
+      );
+      return json(
+        {
+          paciente: pacienteResponse.data.paciente,
+          hospitalizacion: HospitalizacionResponse.data.hospitalizacion,
+        },
+        { status: 200 }
+      );
+    },
+  },
+  {
     path: "/login",
     element: <Login />,
   },
   {
     path: "/Tabla",
     element: <ResponsiveExample />,
-  },
-  {
-    path: "/datos_adicionales",
-    element: <FormularioPacienteAdicional />,
   },
 
   {

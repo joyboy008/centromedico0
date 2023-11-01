@@ -16,7 +16,7 @@ function FormularioCita({ title, onSubmit, onChange, data, esActualizacion }) {
   ];
   return (
     <div id="formulario">
-      <div className="center">
+      <div className="center py-4">
         {/* Crearemos un Formulario con React */}
         <div className="formpaciente">
           <div className="formdentro">
@@ -24,7 +24,7 @@ function FormularioCita({ title, onSubmit, onChange, data, esActualizacion }) {
             <form onSubmit={onSubmit}>
               <div className="form first">
                 <div className="details personal">
-                  <span className="title">Datos de Cita</span>
+                  <span className="title">Datos de La Cita</span>
                   <div className="fields">
                     <div className="input-field">
                       <label>Nombre</label>
@@ -33,6 +33,8 @@ function FormularioCita({ title, onSubmit, onChange, data, esActualizacion }) {
                         name="nombre"
                         value={data.nombre}
                         autoComplete="none"
+                        pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)+$"
+                        title="Ej. Josue Alejandro Morales Castillo"
                         onChange={onChange}
                         placeholder="Nombre completo"
                         required
@@ -43,6 +45,8 @@ function FormularioCita({ title, onSubmit, onChange, data, esActualizacion }) {
                       <input
                         type="text"
                         name="telefono"
+                        title="Ej. 55443322"
+                        pattern="[0-9]{8}"
                         value={data.telefono}
                         autoComplete="none"
                         onChange={onChange}
@@ -65,7 +69,6 @@ function FormularioCita({ title, onSubmit, onChange, data, esActualizacion }) {
                   </div>
                 </div>
                 <div className="details personal">
-                  <span className="title">Datos de la Cita</span>
                   <div className="fields">
                     {esActualizacion ? (
                       <div className="input-field">

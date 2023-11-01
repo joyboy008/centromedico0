@@ -1,6 +1,7 @@
 from fastapi import APIRouter, HTTPException, status, Depends
 from db.models.Paciente import Paciente
 from db.models.Consulta import Consulta, ConsultaPut
+from db.models.Hospitalizacion import Hospitalizacion
 from utils.constants import JWT_SECRET, JWT_ALGORITHM, Roles
 from beanie import PydanticObjectId
 from utils.auth import JWTValidator
@@ -101,6 +102,54 @@ async def actualizar_consulta(
 
     await consulta_guardada.save()
     return {"consulta": consulta_guardada}
+
+
+@router.get(
+    "/hospitalizaciones/{paciente_id}",
+    status_code=status.HTTP_200_OK,
+    dependencies={Depends(JWTValidator)},
+)
+async def get_paciente_hospitalizaciones(paciente_id: str) -> dict:
+    hospitalizaciones = await Hospitalizacion.find(
+        Hospitalizacion.paciente.id == paciente_id
+    ).to_list()
+    return {"hospitalizaciones": hospitalizaciones}
+
+
+@router.get(
+    "/hospitalizacion/{hospitalizacion_id}",
+    status_code=status.HTTP_200_OK,
+    dependencies={Depends(JWTValidator())},
+)
+async def get_consulta(hospitalizacion_id: PydanticObjectId) -> dict:
+    hospitalizacion_guardada = await Hospitalizacion.get(hospitalizacion_id)
+    return {"hospitalizacion": hospitalizacion_guardada}
+
+
+@router.put(
+    "/hospitalizacion/{hospitalizacion_id}",
+    status_code=status.HTTP_200_OK,
+    dependencies={Depends(JWTValidator())},
+)
+async def actualizar_consulta(
+    hospitalizacion: Hospitalizacion, hospitalizacion_id: PydanticObjectId
+) -> dict:
+    hospitalizacion_guardada = await Hospitalizacion.get(hospitalizacion_id)
+    hospitalizacion_guardada.emergencia_nombre = hospitalizacion.emergencia_nombre
+    hospitalizacion_guardada.emergencia_telefono = hospitalizacion.emergencia_telefono
+    hospitalizacion_guardada.emergencia_parentesco = (
+        hospitalizacion.emergencia_parentesco
+    )
+    hospitalizacion_guardada.diagnostico_egreso = hospitalizacion.diagnostico_egreso
+
+    hospitalizacion_guardada.complicaciones = hospitalizacion.complicaciones
+    hospitalizacion_guardada.operaciones = hospitalizacion.operaciones
+    hospitalizacion_guardada.dias_estancia = hospitalizacion.dias_estancia
+    hospitalizacion_guardada.fecha_inicio = hospitalizacion.fecha_inicio
+    hospitalizacion_guardada.activo = hospitalizacion.activo
+
+    await hospitalizacion_guardada.save()
+    return {"consulta": hospitalizacion_guardada}
 
 
 # Crear Modelo Para, Paciente, Enfermero-Secretaria y Doctor-Administrador y agregar rutas PUT, POST, GET, DELETE

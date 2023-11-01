@@ -81,12 +81,15 @@ function CitaListar() {
   return (
     <DefaulLayout title="Listado de Citas">
       <Buscador
+        placeholder={
+          "Puedes buscar la cita por nombre o por número de teléfono del paciente 😁"
+        }
         value={criteria}
         onSearchChange={(event) => {
           setCriteria(event.target.value);
         }}
       />
-      <div className="py-4"></div>
+      <div className="py-1"></div>
       {isLoading ? (
         <Spinner animation="grow" variant="info" />
       ) : (

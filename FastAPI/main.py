@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from db.connection import connect
 from fastapi.middleware.cors import CORSMiddleware
-from routers import pacientes, usuarios, auth, chat, citas, consultas
+from routers import pacientes, usuarios, auth, chat, citas, consultas, hospitalizaciones
 from fastapi.staticfiles import (
     StaticFiles,
 )  # para poder compartir archivos staticos 1/2
@@ -45,6 +45,7 @@ app.include_router(auth.router)
 app.include_router(chat.router)
 app.include_router(citas.router)
 app.include_router(consultas.router)
+app.include_router(hospitalizaciones.router)
 
 # app.include_router(empleados.router)
 

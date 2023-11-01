@@ -6,6 +6,7 @@ import api from "../../utils/api";
 import paginationFactory from "react-bootstrap-table2-paginator";
 import TableActions from "../../components/TableActions";
 import Buscador from "../../components/Buscador";
+import { LiaHospitalSymbolSolid } from "react-icons/lia";
 
 function PacientesListar() {
   const [data, setData] = useState([]);
@@ -32,9 +33,21 @@ function PacientesListar() {
     },
     {
       dataField: "#",
-      text: "Acciones",
+      text: "Modificar - Hospitalizar",
       formatter: (cell, row) => {
-        return <TableActions edit={{ url: "/pacientes/" }} rowId={row._id} />;
+        return (
+          <TableActions
+            edit={{ url: "/pacientes/" }}
+            customActions={[
+              {
+                urlSuffix: "/hospitalizaciones",
+                url: "/pacientes/",
+                icon: <LiaHospitalSymbolSolid />,
+              },
+            ]}
+            rowId={row._id}
+          />
+        );
       },
     },
   ];
@@ -57,6 +70,7 @@ function PacientesListar() {
           paciente.telefono?.toString()?.includes(criteria)
         );
       });
+    } else {
     }
     return data;
   };
@@ -64,11 +78,15 @@ function PacientesListar() {
   return (
     <DefaulLayout title="Listado de Pacientes">
       <Buscador
+        placeholder={
+          " Puedes buscar por nombre o por número de telefono al paciente 😉"
+        }
         value={criteria}
         onSearchChange={(event) => {
           setCriteria(event.target.value);
         }}
       />
+      <div className="py-1"></div>
       {isLoading ? (
         <Spinner animation="grow" variant="info" />
       ) : (

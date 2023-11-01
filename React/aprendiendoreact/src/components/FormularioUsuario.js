@@ -50,7 +50,7 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
           {/* Crearemos un Formulario con React */}
           <div className="formpaciente">
             <div className="formdentro">
-              <header>{title} Usuario</header>
+              <header>{title}</header>
               <form onSubmit={onSubmit}>
                 <div className="form first">
                   <div className="details personal">
@@ -73,13 +73,13 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                       <div className="input-field">
                         <label>Teléfono</label>
                         <input
-                          type="number"
+                          type="str"
                           name="telefono"
-                          data-mask="0000 0000"
+                          title="Ej. 55443322"
+                          pattern="[0-9]{8}"
                           autoComplete="none"
                           value={data.telefono}
                           onChange={onChange}
-                          pattern="^\d{4} \d{4}$"
                           placeholder="Número de teléfono"
                           required
                         />
@@ -87,13 +87,13 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                       <div className="input-field">
                         <label>DPI</label>
                         <input
-                          type="number"
+                          type="str"
                           autoComplete="none"
                           name="dpi"
-                          data-mask="00 00"
+                          title="Ej. 2492 34823 0101"
+                          pattern="[0-9]{13}"
                           value={data.dpi}
                           onChange={onChange}
-                          pattern="0-9]{4}-[0-9]{5}-[0-9]{4}"
                           placeholder="Ingrese el DPI"
                           required
                         />
@@ -105,9 +105,10 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                           name="igss"
                           autoComplete="none"
                           pattern="[0-9]{5}"
+                          title="Ej. 24323"
                           value={data.igss}
                           onChange={onChange}
-                          placeholder="Ejemplo: 32234"
+                          placeholder="Ingrese el IGSS"
                         />
                         {/* <!-- Si no hay igss entonces que devuelva no en el backend --> */}
                       </div>
@@ -161,7 +162,7 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                           value={data.password}
                           onChange={onChange}
                           autoComplete="none"
-                          // pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"
+                          pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).{8,}$"
                           placeholder="Ingrese su password"
                           title="Contraseña requerida de 8 caracteres (debe contener al menos una letra mayúscula, una letra minúscula y un número)"
                           required={!esActualizacion}
@@ -251,6 +252,7 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           value={data.especialidad}
                           onChange={onChange}
+                          autoComplete="none"
                           placeholder="Ingrese la especialidad"
                           title="Ej. Traumatologo"
                           required
@@ -261,11 +263,12 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                         <input
                           type="text"
                           name="emergenciaTelefono"
-                          // pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
+                          title="Ej. 55443322"
+                          pattern="[0-9]{8}"
                           value={data.emergenciaTelefono}
+                          autoComplete="none"
                           onChange={onChange}
                           placeholder="Ingrese el número de emergencia"
-                          title="Ej. Traumatologo"
                           required
                         />
                       </div>
@@ -276,9 +279,10 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                           name="emergenciaNombre"
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           value={data.emergenciaNombre}
+                          autoComplete="none"
                           onChange={onChange}
-                          placeholder="Ingrese el nombre de Emergencia"
-                          title="Ej. Fernanda Corado"
+                          placeholder="Ingrese el nombre del contacto de emergencia"
+                          title="Ingrese el nombre del contacto de emergencia Ej. Fernanda Corado"
                           required
                         />
                       </div>
@@ -287,6 +291,7 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                         <input
                           type="text"
                           name="emergenciaParentesco"
+                          autoComplete="none"
                           pattern="^[A-Za-zÁÉÍÓÚÑáéíóúñ]+( [A-Za-zÁÉÍÓÚÑáéíóúñ]+)*$"
                           value={data.emergenciaParentesco}
                           onChange={onChange}
@@ -338,13 +343,6 @@ function Formulario({ esActualizacion, title, data, onChange, onSubmit }) {
                   <div className="buttons">
                     <button type="submit" className="saveBtn">
                       <span className="btnText">Guardar</span>
-                    </button>
-                    <button
-                      type="button"
-                      className="nxtBtn"
-                      onClick={handleDatosAdicionalesClick}
-                    >
-                      <span className="btnText">Datos Adicionales</span>
                     </button>
                   </div>
                 </div>

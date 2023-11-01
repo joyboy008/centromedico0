@@ -5,6 +5,7 @@ from db.models.Paciente import Paciente
 from db.models.Chat import Chat
 from db.models.Cita import Cita
 from db.models.Consulta import Consulta
+from db.models.Hospitalizacion import Hospitalizacion
 import beanie
 
 # funciones async se usan cuando algo tardara mucho en ejecutarse
@@ -15,5 +16,5 @@ async def connect():
     cliente = motor_asyncio.AsyncIOMotorClient(MONGODB_URI)
     await beanie.init_beanie(
         database=cliente.centromedico,
-        document_models=[Usuario, Paciente, Chat, Cita, Consulta],
+        document_models=[Usuario, Paciente, Chat, Cita, Consulta, Hospitalizacion],
     )
